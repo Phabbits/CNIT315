@@ -1,45 +1,153 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 /*
 
-Hello
+defining number literals
 
 */
 
-int main(){ 
+#define NAME_LENGTH 20
+#define DESCRIPTION_LENGTH 200
+#define NUM_EQUIPMENT 10
+#define NUM_ENCRYPTION 10
+#define NUM_ATTACK 5
 
-    //initialize game 
+int main(){
+
+    //initialize game
+
+    struct Equipment {
+        int id;
+        char name[NAME_LENGTH]; // name of the piece of Equipment
+        char description[DESCRIPTION_LENGTH]; // short description of Equipment
+        int credits; // cost of the Equipment
+        int effectiveness; // number of messages able to be sent
+    };
+
+    struct Encryption {
+        int id;
+        char name[NAME_LENGTH]; // name of the encryption method
+        char description[DESCRIPTION_LENGTH]; // short description of how encryption works
+        int credits; // cost of the encryption
+        double effectiveness; // how effective the encryption is (percentage)
+
+    };
+
+    struct Attack {
+        int id;
+        char name[NAME_LENGTH]; // name of the attack
+        char description[DESCRIPTION_LENGTH]; // short description of how the attack works
+        int tier; // level of intensity
+
+    };
+
+    struct EquipmentInventory {
+        Equipment equipment; // the data
+        int quantity; // the number of this equipment type currently owned
+        EquipmentInventory *next; // the pointer
+    };
+
+    struct EncryptionInventory {
+        Encryption encryption; // the data
+        EncryptionInventory *next; // the pointer
+    };
+
+    struct Player {
+        char name[NAME_LENGTH]; // the player's name
+        EquipmentInventory equipmentInventory; // the current equipment the user owns
+        EncryptionInventory encryptionInventory; // the current encryption methods the user owns
+        int currentCredits; // the current number of credits the user has available
+    };
+
+    struct Round {
+        int attackTier;
+        Attack attack;
+    };
 
     //initialize equipment structures
-    //initailize encrypt structures
+    struct Equipment equipmentStock[NUM_EQUIPMENT] = {
+            {0, "Equipment0", "Equipment0_Description", 10, 100},
+            {1, "Equipment1", "Equipment1_Description", 10, 100},
+            {2, "Equipment2", "Equipment2_Description", 10, 100},
+            {3, "Equipment3", "Equipment3_Description", 10, 100},
+            {4, "Equipment4", "Equipment4_Description", 10, 100},
+            {5, "Equipment5", "Equipment5_Description", 10, 100},
+            {6, "Equipment6", "Equipment6_Description", 10, 100},
+            {7, "Equipment7", "Equipment7_Description", 10, 100},
+            {8, "Equipment8", "Equipment8_Description", 10, 100},
+            {9, "Equipment9", "Equipment9_Description", 10, 100}
+    };
+
+    //initialize encrypt structures
+    struct Encryption encryptionStock[NUM_ENCRYPTION] = {
+            {0, "Encryption0", "Encryption0_Description", 10, 0.75},
+            {1, "Encryption1", "Encryption1_Description", 10, 0.75},
+            {2, "Encryption2", "Encryption2_Description", 10, 0.75},
+            {3, "Encryption3", "Encryption3_Description", 10, 0.75},
+            {4, "Encryption4", "Encryption4_Description", 10, 0.75},
+            {5, "Encryption5", "Encryption5_Description", 10, 0.75},
+            {6, "Encryption6", "Encryption6_Description", 10, 0.75},
+            {7, "Encryption7", "Encryption7_Description", 10, 0.75},
+            {8, "Encryption8", "Encryption8_Description", 10, 0.75},
+            {9, "Encryption9", "Encryption9_Description", 10, 0.75}
+    };
+
+    //initialize Attack structures
+    struct Attack attackStock[NUM_ATTACK] = {
+            {0, "Attack0", "Attack0_Description", 1},
+            {1, "Attack1", "Attack1_Description", 1},
+            {2, "Attack2", "Attack2_Description", 2},
+            {3, "Attack3", "Attack3_Description", 2},
+            {4, "Attack4", "Attack4_Description", 3}
+    };
+
     //initialize 2d of attack effects (encrypt)
-    //create an array storing each equipment structure
+    double attackEffectiveness[NUM_ENCRYPTION][NUM_ATTACK] = {
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption0
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption1
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption2
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption3
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption7
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption8
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0} // Encryption9
+    };
 
-    //order attacks for game rounds 
+    //order attacks for game rounds
+    Round rounds[5] = {
+            {1, attackStock[0]},
+            {1, attackStock[0]},
+            {2, attackStock[0]},
+            {2, attackStock[0]},
+            {3, attackStock[0]},
+    };
 
-    //request player name 
+    /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
 
-     
+    //initialize player
+    Player player;
+    printf("Enter Player Name: ");
+    scanf("%s", &player.name);
+    player.equipmentInventory = {equipmentStock[0], 1}; /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
+    player.encryptionInventory = {encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
+    player.currentCredits = 30;
 
-    //initialize player 
+    while(player has options and more rounds exists){
 
-    //create an equipment array of amount of equipment
-    //create a dymanic list from pointers to encrypt
-
-    //set startup equipment, encryption method, credits 
-
-     
-
-    while(player has options and more rounds exists){ 
-
-        //output player status (if statments)
+        //output player status (if statements)
         //current credit
         //current equipment
         //pulls from info from index amount table referencing index struct table
+                /* WHY DO WE NEED TO USE MULTIPLE ARRAYS FOR EQUIPMENT INSTEAD OF A LIST WITH A QUANTITY ATTRIBUTE? */
         //current encrypt
-        //iderate and print through current encryption 
+        //iterate and print through current encryption
         
-        //recieve credits 
-        //use equation to figure out how many credit user recieves 
-        //tell user how credits recived and what encrypt method was used 
+        //receive credits
+        //use equation to figure out how many credit user receives
+        //tell user how credits received and what encrypt method was used
 
         //present attack 
         //print attack details and affects of attack 
@@ -47,7 +155,7 @@ int main(){
 
         //spend credits interactive menu 
 
-        //display avaible equiptment and encrypt options 
+        //display available equipment and encrypt options
         //as well how many credits and what the current inventory is
         
         //buying equipment 
@@ -58,12 +166,12 @@ int main(){
         //add pointer to encrypt linked list 
         //decrease credits if things are brought
 
-        //selling enquipment
+        //selling equipment
         //decrease amount in index amount if things are sold 
         //increase credit if things are sold
 
 
-    } 
+    }
 
     //save player score to leaderboard (prototype 2) 
 
