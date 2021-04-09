@@ -14,49 +14,48 @@ defining number literals
 #define NUM_ATTACK 5
 #define NUM_ROUNDS 5
 
+struct Equipment {
+    char name[NAME_LENGTH]; // name of the piece of Equipment
+    char description[DESCRIPTION_LENGTH]; // short description of Equipment
+    int cost; // cost of the Equipment
+    int messageAmount; // number of messages able to be sent
+};
+
+struct Encryption {
+    char name[NAME_LENGTH]; // name of the encryption method
+    char description[DESCRIPTION_LENGTH]; // short description of how encryption works
+    int cost; // cost of the encryption
+    double effectiveness; // how effective the encryption is (percentage)
+
+};
+
+struct Attack {
+    char name[NAME_LENGTH]; // name of the attack
+    char description[DESCRIPTION_LENGTH]; // short description of how the attack works
+    int tier; // level of intensity
+
+};
+
+struct EncryptionInventory {
+    Encryption encryption; // the data
+    EncryptionInventory *next; // the pointer
+};
+
+struct Player {
+    char name[NAME_LENGTH]; // the player's name
+    int equipmentInventory[NUM_EQUIPMENT] = {0}; // the current equipment the user owns
+    EncryptionInventory encryptionInventory; // the current encryption methods the user owns
+    int currentCredits; // the current number of credits the user has available
+};
+
+struct Round {
+    int attackTier;
+    Attack attack;
+};
+
 int main(){
 
     //initialize game
-
-    struct Equipment {
-        char name[NAME_LENGTH]; // name of the piece of Equipment
-        char description[DESCRIPTION_LENGTH]; // short description of Equipment
-        int cost; // cost of the Equipment
-        int effectiveness; // number of messages able to be sent
-    };
-
-    struct Encryption {
-        char name[NAME_LENGTH]; // name of the encryption method
-        char description[DESCRIPTION_LENGTH]; // short description of how encryption works
-        int cost; // cost of the encryption
-        double effectiveness; // how effective the encryption is (percentage)
-
-    };
-
-    struct Attack {
-        char name[NAME_LENGTH]; // name of the attack
-        char description[DESCRIPTION_LENGTH]; // short description of how the attack works
-        int tier; // level of intensity
-
-    };
-
-
-    struct EncryptionInventory {
-        Encryption encryption; // the data
-        EncryptionInventory *next; // the pointer
-    };
-
-    struct Player {
-        char name[NAME_LENGTH]; // the player's name
-        int equipmentInventory[NUM_EQUIPMENT] = {0}; // the current equipment the user owns
-        EncryptionInventory encryptionInventory; // the current encryption methods the user owns
-        int currentCredits; // the current number of credits the user has available
-    };
-
-    struct Round {
-        int attackTier;
-        Attack attack;
-    };
 
     //initialize equipment structures
     struct Equipment equipmentStock[NUM_EQUIPMENT] = {
