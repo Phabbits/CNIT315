@@ -145,7 +145,6 @@ int main(){
             // amount of this encryption type that the player has is stored in encryptionInventory
             printf("%s: %d\n", encryptionStock[i]->name, player.encryptionInventory[i]);
         }  //current encrypt
-			/* using j as the array type for encryption here. whatever the current encryption type is will be put in j */
         //iterate and print through current encryption
     }
         
