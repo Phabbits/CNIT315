@@ -135,25 +135,45 @@ int main(){
         for (i = 0; i < NUM_EQUIPMENT; i++){
             // details about the equipment type itself is stored in equipmentStock
             // amount of this equipment type that the player has is stored in equipmentInventory
-            printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]);
-        } //current equipment
+            printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]); //current equipment
+        } //end for loop
             
 		//pulls from info from index amount table referencing index struct table
             
 
-struct EncryptionInventory encryptionPointer = *player.encryptionInventory;
+		struct EncryptionInventory encryptionPointer = *player.encryptionInventory; //create pointer
 		while (encryptionPointer != null){
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf("%s\n", encryptionPointer->encryption->name);
-            encryptionPointer=encryptionPointer->next;
-        }  //current encrypt
+            printf("%s\n", encryptionPointer->encryption->name); //current encrypt
+            encryptionPointer=encryptionPointer->next; //pointer
+        } //end while loop
+		
         //iterate and print through current encryption
     }
         
         //receive credits
+		int sum;
+		int newCredits;
+		printf("Original credits: %d\n", player.currentCredits); //prints out the current credits the player has
+		
         //use equation to figure out how many credit user receives
+		newCredits = player.currentCredits * Encryption.effectiveness * Equipment.messageAmount;
+		
+		for (int i = 0; i < equipment; i++){
+			sum += equipmentStock[i] * equipmentInventory[i]; //sum message amount of equipment(s)
+		}
+		
+		//multiply the sum player.encryptionInventory.encryption.effectiveness; 
+			//TODO: figure out which encryption was chosen
+		newCredits = sum * player.encryptionInventory.encryption.effectiveness; //number of credits player receives
+		
+		player.currentCredits += newCredits; //adding credits to currentCredits
+		
         //tell user how credits received and what encrypt method was used
+		printf("You received %d credits!\n", newCredits); //telling the user how many credits they were awarded
+		
+		printf("Credits: %d\n", player.currentCredits); //current credit
 
         //present attack 
         //print attack details and affects of attack 
