@@ -129,16 +129,27 @@ int main(){
 
     while(player has options and more rounds exists){
         //receive credits NATHAN
-        if(end of round){ //output player status (if statements)
-            player.currentCredits = player.currentCredits - (equipment.cost + encryption.cost); //current credit
-            player.equipmentInventory[i] = player.equipmentInventory[i]; //current equipment
+        printf("Credits: %d\n", player.currentCredits); //current credit
+		
+        int i;
+        for (i = 0; i < NUM_EQUIPMENT; i++){
+            // details about the equipment type itself is stored in equipmentStock
+            // amount of this equipment type that the player has is stored in equipmentInventory
+            printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]);
+        } //current equipment
             /* using i as the array type for equipment here. whatever the current equipment type is will be put in i */
-            //pulls from info from index amount table referencing index struct table
-            /* WHY DO WE NEED TO USE MULTIPLE ARRAYS FOR EQUIPMENT INSTEAD OF A LIST WITH A QUANTITY ATTRIBUTE? */
-            player.encryptionInventory = {encryptionStock[j]}; //current encrypt
-            /* using j as the array type for encryption here. whatever the current encryption type is will be put in j */
-            //iterate and print through current encryption
-        }
+            
+		//pulls from info from index amount table referencing index struct table
+            
+		int j;
+		for (j = 0; j < NUM_ENCRYPTION; j++){
+            // details about the encryption type itself is stored in encryptionStock
+            // amount of this encryption type that the player has is stored in encryptionInventory
+            printf("%s: %d\n", encryptionStock[j]->name, player.encryptionInventory[j]);
+        }  //current encrypt
+			/* using j as the array type for encryption here. whatever the current encryption type is will be put in j */
+        //iterate and print through current encryption
+    }
         
         //use equation to figure out how many credit user receives
         //tell user how credits received and what encrypt method was used
