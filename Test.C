@@ -127,7 +127,7 @@ int main(){
     player.currentCredits = 30;
 
     //output pregame information
-    briefing(&player);
+    displayBriefingMessage(&player);
 
     while(currentRound < NUM_ROUNDS){
         printf("|================================== Round %2d ==================================|\n", currentRound);
