@@ -151,10 +151,11 @@ int main(){
         //iterate and print through current encryption
     }
         
+        //receive credits
         //use equation to figure out how many credit user receives
         //tell user how credits received and what encrypt method was used
 
-        //present attack NATHAN
+        //present attack 
         //print attack details and affects of attack 
         //edit encrypt structure effectiveness 
 
