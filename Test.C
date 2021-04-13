@@ -50,7 +50,7 @@ struct Round {
 };
 
 //Function prototypes
-void briefing(Player *player);
+void displayBriefingMessage(Player *playerPtr);
 
 int main(){
     //Initialize game
