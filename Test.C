@@ -1,47 +1,145 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 /*
 
-Hello
+defining number literals
 
 */
 
-int main(){ 
+#define NAME_LENGTH 20
+#define DESCRIPTION_LENGTH 200
+#define NUM_EQUIPMENT 10
+#define NUM_ENCRYPTION 10
+#define NUM_ATTACK 5
+#define NUM_ROUNDS 5
 
-    //initialize game 
+struct Equipment {
+    char name[NAME_LENGTH]; // name of the piece of Equipment
+    char description[DESCRIPTION_LENGTH]; // short description of Equipment
+    int cost; // cost of the Equipment
+    int messageAmount; // number of messages able to be sent
+};
+
+struct Encryption {
+    char name[NAME_LENGTH]; // name of the encryption method
+    char description[DESCRIPTION_LENGTH]; // short description of how encryption works
+    int cost; // cost of the encryption
+    double effectiveness; // how effective the encryption is (percentage)
+
+};
+
+struct Attack {
+    char name[NAME_LENGTH]; // name of the attack
+    char description[DESCRIPTION_LENGTH]; // short description of how the attack works
+    int tier; // level of intensity
+
+};
+
+struct EncryptionInventory {
+    Encryption encryption; // the data
+    EncryptionInventory *next; // the pointer
+};
+
+struct Player {
+    char name[NAME_LENGTH]; // the player's name
+    int equipmentInventory[NUM_EQUIPMENT] = {0}; // the current equipment the user owns
+    EncryptionInventory encryptionInventory; // the current encryption methods the user owns
+    int currentCredits; // the current number of credits the user has available
+};
+
+struct Round {
+    int attackTier;
+    Attack attack;
+};
+
+int main(){
+
+    //initialize game
 
     //initialize equipment structures
-    //initailize encrypt structures
+    struct Equipment equipmentStock[NUM_EQUIPMENT] = {
+            {"Equipment0", "Equipment0_Description", 10, 100},
+            {"Equipment1", "Equipment1_Description", 10, 100},
+            {"Equipment2", "Equipment2_Description", 10, 100},
+            {"Equipment3", "Equipment3_Description", 10, 100},
+            {"Equipment4", "Equipment4_Description", 10, 100},
+            {"Equipment5", "Equipment5_Description", 10, 100},
+            {"Equipment6", "Equipment6_Description", 10, 100},
+            {"Equipment7", "Equipment7_Description", 10, 100},
+            {"Equipment8", "Equipment8_Description", 10, 100},
+            {"Equipment9", "Equipment9_Description", 10, 100}
+    };
+
+    //initialize encrypt structures
+    struct Encryption encryptionStock[NUM_ENCRYPTION] = {
+            {"Encryption0", "Encryption0_Description", 10, 0.75},
+            {"Encryption1", "Encryption1_Description", 10, 0.75},
+            {"Encryption2", "Encryption2_Description", 10, 0.75},
+            {"Encryption3", "Encryption3_Description", 10, 0.75},
+            {"Encryption4", "Encryption4_Description", 10, 0.75},
+            {"Encryption5", "Encryption5_Description", 10, 0.75},
+            {"Encryption6", "Encryption6_Description", 10, 0.75},
+            {"Encryption7", "Encryption7_Description", 10, 0.75},
+            {"Encryption8", "Encryption8_Description", 10, 0.75},
+            {"Encryption9", "Encryption9_Description", 10, 0.75}
+    };
+
+    //initialize Attack structures
+    struct Attack attackStock[NUM_ATTACK] = {
+            {"Attack0", "Attack0_Description", 1},
+            {"Attack1", "Attack1_Description", 1},
+            {"Attack2", "Attack2_Description", 2},
+            {"Attack3", "Attack3_Description", 2},
+            {"Attack4", "Attack4_Description", 3}
+    };
+
     //initialize 2d of attack effects (encrypt)
-    //create an array storing each equipment structure
+    double attackEffectiveness[NUM_ENCRYPTION][NUM_ATTACK] = {
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption0
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption1
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption2
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption3
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption7
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption8
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0} // Encryption9
+    };
 
-    //order attacks for game rounds 
+    //order attacks for game rounds
+    Round rounds[NUM_ROUNDS] = {
+            {1, attackStock[0]},
+            {1, attackStock[0]},
+            {2, attackStock[0]},
+            {2, attackStock[0]},
+            {3, attackStock[0]},
+    };
 
-    //request player name 
+    /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
 
-     
+    //initialize player
+    Player player;
+    printf("Enter Player Name: ");
+    scanf("%s", &player.name);
+    player.equipmentInventory[0] = 1; /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
+    player.encryptionInventory = {encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
+    player.currentCredits = 30;
 
-    //initialize player 
-
-    //create an equipment array of amount of equipment
-    //create a dymanic list from pointers to encrypt
-
-    //set startup equipment, encryption method, credits 
-
-     
-
-    while(player has options and more rounds exists){ 
-
-		if(end of round){ //output player status (if statements)
-			player.currentCredits = player.currentCredits - (equipment.cost + encryption.cost); //current credit
-			player.equipmentInventory[i] = player.equipmentInventory[i]; //current equipment
-				/* using i as the array type for equipment here. whatever the current equipment type is will be put in i */
-			//pulls from info from index amount table referencing index struct table
-                /* WHY DO WE NEED TO USE MULTIPLE ARRAYS FOR EQUIPMENT INSTEAD OF A LIST WITH A QUANTITY ATTRIBUTE? */
-			player.encryptionInventory = {encryptionStock[j]}; //current encrypt
-				/* using j as the array type for encryption here. whatever the current encryption type is will be put in j */
-			//iterate and print through current encryption
-		}
-        
+    while(player has options and more rounds exists){
         //receive credits NATHAN
+        if(end of round){ //output player status (if statements)
+            player.currentCredits = player.currentCredits - (equipment.cost + encryption.cost); //current credit
+            player.equipmentInventory[i] = player.equipmentInventory[i]; //current equipment
+            /* using i as the array type for equipment here. whatever the current equipment type is will be put in i */
+            //pulls from info from index amount table referencing index struct table
+            /* WHY DO WE NEED TO USE MULTIPLE ARRAYS FOR EQUIPMENT INSTEAD OF A LIST WITH A QUANTITY ATTRIBUTE? */
+            player.encryptionInventory = {encryptionStock[j]}; //current encrypt
+            /* using j as the array type for encryption here. whatever the current encryption type is will be put in j */
+            //iterate and print through current encryption
+        }
+        
         //use equation to figure out how many credit user receives
         //tell user how credits received and what encrypt method was used
 
@@ -51,7 +149,7 @@ int main(){
 
         //spend credits interactive menu 
 
-        //display avaible equiptment and encrypt options 
+        //display available equipment and encrypt options
         //as well how many credits and what the current inventory is
         
         //buying equipment 
@@ -62,12 +160,12 @@ int main(){
         //add pointer to encrypt linked list 
         //decrease credits if things are brought
 
-        //selling enquipment
+        //selling equipment
         //decrease amount in index amount if things are sold 
         //increase credit if things are sold
 
 
-    } 
+    }
 
     //save player score to leaderboard (prototype 2) 
 
