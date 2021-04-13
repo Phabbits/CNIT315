@@ -137,7 +137,6 @@ int main(){
             // amount of this equipment type that the player has is stored in equipmentInventory
             printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]);
         } //current equipment
-            /* using i as the array type for equipment here. whatever the current equipment type is will be put in i */
             
 		//pulls from info from index amount table referencing index struct table
             
