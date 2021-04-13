@@ -1,5 +1,5 @@
 # CNIT Two Course Collaborative Semester Project - Educational cybersecurity game
-Collaborative semester project between Introduction to Cryptography (CNIT 370) and Systems Programming (CNIT 315). With this collaboration, CNIT 370 designed the game, and content, while CNIT 370 programmed everything in C.
+Collaborative semester project between Introduction to Cryptography (CNIT 370) and Systems Programming (CNIT 315). With this collaboration, CNIT 370 designed the game, and content, while CNIT 315 programmed everything in C.
 
 ## Object of the Game:
 This game follows a player through history as they try to send the most confidential messages possible utilizing increasingly secure encryption methods to battle constantly improving attacks against them. The player can achieve this through two controls: 1 - the amount of messages they are able to send (equipment) and 2 - the amount of sent messages that remain secure (encryption method). Throughout the game the player will have to adapt their strategy to account for encryption methods that are cracked, and upgrade their equipment to handle more sophisticated encryption methods. 
