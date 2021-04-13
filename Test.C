@@ -140,10 +140,13 @@ int main(){
             
 		//pulls from info from index amount table referencing index struct table
             
-		for (i = 0; i < NUM_ENCRYPTION; i++){
+
+struct EncryptionInventory encryptionPointer = *player.encryptionInventory;
+		while (encryptionPointer != null){
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf("%s: %d\n", encryptionStock[i]->name, player.encryptionInventory[i]);
+            printf("%s\n", encryptionPointer->encryption->name);
+            encryptionPointer=encryptionPointer->next;
         }  //current encrypt
         //iterate and print through current encryption
     }
