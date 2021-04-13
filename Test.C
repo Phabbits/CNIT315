@@ -140,11 +140,10 @@ int main(){
             
 		//pulls from info from index amount table referencing index struct table
             
-		int j;
-		for (j = 0; j < NUM_ENCRYPTION; j++){
+		for (i = 0; i < NUM_ENCRYPTION; i++){
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf("%s: %d\n", encryptionStock[j]->name, player.encryptionInventory[j]);
+            printf("%s: %d\n", encryptionStock[i]->name, player.encryptionInventory[i]);
         }  //current encrypt
 			/* using j as the array type for encryption here. whatever the current encryption type is will be put in j */
         //iterate and print through current encryption
