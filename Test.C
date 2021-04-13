@@ -195,7 +195,7 @@ int main(){
 * Parameters:  playerPtr, Player, pointer to the player object
 * Return:      void
 ******************************************************************************/
-void briefing(Player *playerPtr){
+void displayBriefingMessage(Player *playerPtr){
     char pause;
 
     //end with printf for line-buffered console timely printing considerations
