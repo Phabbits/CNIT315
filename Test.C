@@ -1,12 +1,8 @@
+//Include
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-
-defining number literals
-
-*/
-
+//Define literals
 #define NAME_LENGTH 20
 #define DESCRIPTION_LENGTH 200
 #define NUM_EQUIPMENT 10
@@ -14,6 +10,7 @@ defining number literals
 #define NUM_ATTACK 5
 #define NUM_ROUNDS 5
 
+//Define structures
 struct Equipment {
     char name[NAME_LENGTH]; // name of the piece of Equipment
     char description[DESCRIPTION_LENGTH]; // short description of Equipment
@@ -33,7 +30,6 @@ struct Attack {
     char name[NAME_LENGTH]; // name of the attack
     char description[DESCRIPTION_LENGTH]; // short description of how the attack works
     int tier; // level of intensity
-
 };
 
 struct EncryptionInventory {
@@ -53,9 +49,11 @@ struct Round {
     Attack attack;
 };
 
-int main(){
+//Function prototypes
+void briefing(Player *player);
 
-    //initialize game
+int main(){
+    //Initialize game
 
     //initialize equipment structures
     struct Equipment equipmentStock[NUM_EQUIPMENT] = {
@@ -117,18 +115,22 @@ int main(){
             {3, attackStock[0]},
     };
 
+    //declare
+    struct Player player;
+    int currentRound = 0;
+
     /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
 
-    //initialize player
-    Player player;
-    printf("Enter Player Name: ");
-    scanf("%s", &player.name);
+    //Setup player
     player.equipmentInventory[0] = 1; /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
     player.encryptionInventory = {encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
     player.currentCredits = 30;
 
-    while(player has options and more rounds exists){
+    //output pregame information
+    briefing(&player);
 
+    while(currentRound < NUM_ROUNDS){
+        printf("|================================== Round %2d ==================================|\n", currentRound);
         //output player status (if statements)
         //current credit
         //current equipment
@@ -136,37 +138,87 @@ int main(){
                 /* WHY DO WE NEED TO USE MULTIPLE ARRAYS FOR EQUIPMENT INSTEAD OF A LIST WITH A QUANTITY ATTRIBUTE? */
         //current encrypt
         //iterate and print through current encryption
-        
+
         //receive credits
         //use equation to figure out how many credit user receives
         //tell user how credits received and what encrypt method was used
 
-        //present attack 
-        //print attack details and affects of attack 
-        //edit encrypt structure effectiveness 
+        //present attack
+        //print attack details and affects of attack
+        //edit encrypt structure effectiveness
 
-        //spend credits interactive menu 
+        //spend credits interactive menu
+        printf("|-------------------------------- Credit Store --------------------------------|\n");
 
         //display available equipment and encrypt options
         //as well how many credits and what the current inventory is
-        
-        //buying equipment 
+
+        //buying equipment
         //increase amount in index amount if things are bought
         //decrease credits if things are bought
 
         //buying encrypt
-        //add pointer to encrypt linked list 
+        //add pointer to encrypt linked list
         //decrease credits if things are brought
 
         //selling equipment
-        //decrease amount in index amount if things are sold 
+        //decrease amount in index amount if things are sold
         //increase credit if things are sold
 
-
+        //round is complete
+        currentRound++;
     }
 
-    //save player score to leaderboard (prototype 2) 
+    //save player score to leaderboard (prototype 2)
 
-} 
+}
 
-     
+/******************************************************************************
+* Function:    briefing
+* Description: Brief the player on how to play the game
+* Parameters:  playerPtr, Player, pointer to the player object
+* Return:      void
+******************************************************************************/
+void briefing(Player *playerPtr){
+    char pause;
+
+    //end with printf for line-buffered console timely printing considerations
+    //80 characters is defacto standard output width for consoles
+    printf("/******************************************************************************\\\n");
+    printf("|================== Welcome to Cybersecurity Through History ==================|\n");
+    printf("\\******************************************************************************/\n");
+
+    //keep line spacing as own printf function for easier readability
+    printf("\n");
+    printf("Enter Player Name: ");
+    scanf("%s", &playerPtr->name);
+    //catch "phantom" enter
+    scanf("%c", &pause);
+
+    printf("\n");
+    printf("|================================== Briefing ==================================|\n");
+    printf("Hello %s, \n", playerPtr->name);
+    printf("\n");
+    printf("Your goal is to send as many confidential messages as possible throughout %d\n", NUM_ROUNDS);
+    printf("rounds. You have two controls: the amount of messages you send via EQUIPMENT,\n");
+    printf("and the amount of messages sent that remain confidential determined by the \n");
+    printf("ENCRYPTION METHOD used.\n");
+    //force player to press enter to continue
+    scanf("%c", &pause);
+    printf("At the end of each round, there is a chance that a new ATTACK will have been\n");
+    printf("developed, which will reduce the effectiveness of your current ENCRYPTION \n");
+    printf("METHODS.\n");
+    //force player to press enter to continue
+    scanf("%c", &pause);
+    printf("In response, you will enter a store stage where you can buy and sell equipment,\n");
+    printf("and upgrade to a newer encryption method. You will recieve CREDITS for the \n");
+    printf("amount of confidential messages sent each round, which you can spend in the\n");
+    printf("store.\n");
+    //force player to press enter to continue
+    scanf("%c", &pause);
+    printf("Good Luck!\n");
+    printf("|============================= Briefing Completed =============================|\n");
+
+    //force player to press enter to continue
+    scanf("%c", &pause);
+}
