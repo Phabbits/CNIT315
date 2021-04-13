@@ -131,15 +131,31 @@ int main(){
 
     while(currentRound < NUM_ROUNDS){
         printf("|================================== Round %2d ==================================|\n", currentRound);
+
         //output player status (if statements)
         //current credit
-        //current equipment
-        //pulls from info from index amount table referencing index struct table
-                /* WHY DO WE NEED TO USE MULTIPLE ARRAYS FOR EQUIPMENT INSTEAD OF A LIST WITH A QUANTITY ATTRIBUTE? */
-        //current encrypt
+        printf("Credits: %d\n", player.currentCredits); //current credit
+        
+        int i;
+        for (i = 0; i < NUM_EQUIPMENT; i++){
+            // details about the equipment type itself is stored in equipmentStock
+            // amount of this equipment type that the player has is stored in equipmentInventory
+            printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]);
+        } //current equipment
+
+	      //pulls from info from index amount table referencing index struct table
+
+
+        struct EncryptionInventory encryptionPointer = *player.encryptionInventory;
+	      while (encryptionPointer != null){
+            // details about the encryption type itself is stored in encryptionStock
+            // amount of this encryption type that the player has is stored in encryptionInventory
+            printf("%s\n", encryptionPointer->encryption->name);
+            encryptionPointer=encryptionPointer->next;
+        }  //current encrypt
         //iterate and print through current encryption
 
-        //receive credits
+        //receive credits NATHAN
         //use equation to figure out how many credit user receives
         //tell user how credits received and what encrypt method was used
 
