@@ -249,7 +249,7 @@ int main()
             // details about the equipment type itself is stored in equipmentStock
             // amount of this equipment type that the player has is stored in equipmentInventory
             printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]);
-        } //current equipment
+        } //end for loop
 
         //pulls from info from index amount table referencing index struct table
 
@@ -258,14 +258,31 @@ int main()
         {
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf("%s\n", encryptionPointer->encryption->name);
-            encryptionPointer = encryptionPointer->next;
-        } //current encrypt
+            printf("%s\n", encryptionPointer->encryption->name); //current encrypt
+            encryptionPointer = encryptionPointer->next; //pointer
+        } //end while loop
         //iterate and print through current encryption
+        
+    //receive credits
+		int sum = 0;
+		int newCredits = 0;
+		printf("Original credits: %d\n", player.currentCredits); //prints out the current credits the player has
 
-        //receive credits NATHAN
-        //use equation to figure out how many credit user receives
+		
+		for (int i = 0; i < NUM_EQUIPMENT; i++){
+			sum += equipmentStock[i].messageAmount * player.equipmentInventory[i]; //sum message amount of equipment(s)
+		}
+		
+		//multiply the sum player.encryptionInventory.encryption.effectiveness; 
+			//TODO: figure out which encryption was chosen
+		newCredits = sum * player.encryptionInventory.encryption.effectiveness; //number of credits player receives
+		
+		player.currentCredits += newCredits; //adding credits to currentCredits
+		
         //tell user how credits received and what encrypt method was used
+		printf("You received %d credits!\n", newCredits); //telling the user how many credits they were awarded
+		
+		printf("Credits: %d\n", player.currentCredits); //current credit
 
         //present attack
         //print attack details and affects of attack
@@ -273,6 +290,9 @@ int main()
 
         //spend credits interactive menu
         printf("|-------------------------------- Credit Store --------------------------------|\n");
+        printf("Here you can buy equipment and upgrade encryption as well as sell the equipment/n");
+        printf("that you already own.\n");
+        printf("Your current credits are: %d\n", player.currentCredits); //current credit
 
         //display available equipment and encrypt options
         //as well how many credits and what the current inventory is
