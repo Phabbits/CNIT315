@@ -222,6 +222,7 @@ void displayBriefingMessage(Player *playerPtr){
     //force player to press enter to continue
     printf("%80s", "[Press Enter to Continue]");
     scanf("%c", &pause);
+    printf("\n");
     printf("At the end of each round, there is a chance that a new ATTACK will have been\n");
     printf("developed, which will reduce the effectiveness of your current ENCRYPTION \n");
     printf("METHODS.\n");
