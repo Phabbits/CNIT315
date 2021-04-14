@@ -183,6 +183,9 @@ int main(){
 
         //spend credits interactive menu
         printf("|-------------------------------- Credit Store --------------------------------|\n");
+        printf("Here you can buy equipment and upgrade encryption as well as sell the equipment/n");
+        printf("that you already own.\n");
+        printf("Your current credits are: %d\n", player.currentCredits); //current credit
 
         //display available equipment and encrypt options
         //as well how many credits and what the current inventory is
