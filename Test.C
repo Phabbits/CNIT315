@@ -179,7 +179,19 @@ int main(){
 
         //present attack
         //print attack details and affects of attack
+		printf("You are being affected by %c\n", attackStock[i]); //print what attack is happening
+		printf("%c\n", Attack_Description); //print attack description
+		
         //edit encrypt structure effectiveness
+		for (i = 0; i < equipmentStock; i++){
+				
+			attackEffectiveness = attackEffectiveness[i][ROUNDS[currentRound]].attack;
+			encryption.effectiveness -= attack.attackEffectiveness * encryption.effectiveness;	//psuedocode for calculating new effectiveness
+			printf("equpiment was reduced by %d", encryption.effectiveness); //printing what the equipment was reduced by
+		}
+			
+			
+			//change what rounds does
 
         //spend credits interactive menu
         printf("|-------------------------------- Credit Store --------------------------------|\n");
