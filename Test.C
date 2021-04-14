@@ -11,40 +11,45 @@
 #define NUM_ROUNDS 5
 
 //Define structures
-struct Equipment {
-    char name[NAME_LENGTH]; // name of the piece of Equipment
+struct Equipment
+{
+    char name[NAME_LENGTH];               // name of the piece of Equipment
     char description[DESCRIPTION_LENGTH]; // short description of Equipment
-    int cost; // cost of the Equipment
-    int messageAmount; // number of messages able to be sent
+    int cost;                             // cost of the Equipment
+    int messageAmount;                    // number of messages able to be sent
 };
 
-struct Encryption {
-    char name[NAME_LENGTH]; // name of the encryption method
+struct Encryption
+{
+    char name[NAME_LENGTH];               // name of the encryption method
     char description[DESCRIPTION_LENGTH]; // short description of how encryption works
-    int cost; // cost of the encryption
-    double effectiveness; // how effective the encryption is (percentage)
-
+    int cost;                             // cost of the encryption
+    double effectiveness;                 // how effective the encryption is (percentage)
 };
 
-struct Attack {
-    char name[NAME_LENGTH]; // name of the attack
+struct Attack
+{
+    char name[NAME_LENGTH];               // name of the attack
     char description[DESCRIPTION_LENGTH]; // short description of how the attack works
-    int tier; // level of intensity
+    int tier;                             // level of intensity
 };
 
-struct EncryptionInventory {
-    Encryption encryption; // the data
+struct EncryptionInventory
+{
+    Encryption encryption;     // the data
     EncryptionInventory *next; // the pointer
 };
 
-struct Player {
-    char name[NAME_LENGTH]; // the player's name
+struct Player
+{
+    char name[NAME_LENGTH];                      // the player's name
     int equipmentInventory[NUM_EQUIPMENT] = {0}; // the current equipment the user owns
-    EncryptionInventory encryptionInventory; // the current encryption methods the user owns
-    int currentCredits; // the current number of credits the user has available
+    EncryptionInventory encryptionInventory;     // the current encryption methods the user owns
+    int currentCredits;                          // the current number of credits the user has available
 };
 
-struct Round {
+struct Round
+{
     int attackTier;
     Attack attack;
 };
@@ -52,67 +57,168 @@ struct Round {
 //Function prototypes
 void displayBriefingMessage(Player *playerPtr);
 
-int main(){
+void equipmentStore()
+{
+    int equipSelect;
+    int amountSelect;
+    int transactionTotal;
+    char yesNo;
+
+    printf("|-------------------------------- Equipment Store --------------------------------|\n");
+    printf("%s %s %d %d\n", equipmentStock[0][0] equipmentStock[0][1] equiptmentStock[0][2] equiptmentStock[0][3]);
+    printf("%s %s %d %d\n", equipmentStock[1][0] equipmentStock[1][1] equiptmentStock[1][2] equiptmentStock[1][3]);
+    printf("%s %s %d %d\n", equipmentStock[2][0] equipmentStock[2][1] equiptmentStock[2][2] equiptmentStock[2][3]);
+    printf("%s %s %d %d\n", equipmentStock[3][0] equipmentStock[3][1] equiptmentStock[3][2] equiptmentStock[3][3]);
+    printf("%s %s %d %d\n", equipmentStock[4][0] equipmentStock[4][1] equiptmentStock[4][2] equiptmentStock[4][3]);
+    printf("%s %s %d %d\n", equipmentStock[5][0] equipmentStock[5][1] equiptmentStock[5][2] equiptmentStock[5][3]);
+    printf("%s %s %d %d\n", equipmentStock[6][0] equipmentStock[6][1] equiptmentStock[6][2] equiptmentStock[6][3]);
+    printf("%s %s %d %d\n", equipmentStock[7][0] equipmentStock[7][1] equiptmentStock[7][2] equiptmentStock[7][3]);
+    printf("%s %s %d %d\n", equipmentStock[8][0] equipmentStock[8][1] equiptmentStock[8][2] equiptmentStock[8][3]);
+    printf("%s %s %d %d\n", equipmentStock[9][0] equipmentStock[9][1] equiptmentStock[9][2] equiptmentStock[9][3]);
+    printf("\nPlease Select the number of the equipment you would like to buy"); //1-10 input
+    scanf("\n%d", &equipSelect);
+
+    If(equipSelect > 0 && equipSelect < 11) //if in range
+    {
+        printf("You have selected: ");
+        printf("%s", equipmentStock[equipmentselect - 1][0]);
+        printf("\n How many would you like to buy?");
+        scanf("\n%d", &amountSelect);
+        int transactionTotal = equipmentStock[equipmentselect - 1][2] * amountSelect;
+        printf("\nThis will cost: %d ", transactionTotal);
+        if (player.currentCredits != transactionTotal) //credit check
+        {
+            printf("\nInsufficient funds");
+            return; //lazy return lol
+        }
+        printf("\nAre you sure? Y/N");
+        scanf(" %c", &yesNo);
+        if (yesNo == 'N' || yesNo == 'n')
+            return;
+        printf("\nThank You!");
+        player.currentCredits = player.currentCredits - transactionTotal;
+        player.equipmentInventory[equipmentselect - 1] = player.equipmentInventory[equipmentselect - 1] + amountSelect;
+    }
+    else
+    {
+        printf("Selection out of range");
+        return;
+    }
+}
+
+void encryptionStore()
+{
+    int encryptSelect;
+    int amountSelect;
+    int transactionTotal;
+    char yesNo;
+
+    printf("|-------------------------------- Encryption Store --------------------------------|\n");
+    printf("%s %s %d %f\n", encryptionStock[0][0] encryptionStock[0][1] encryptionStock[0][2] encryptionStock[0][3]);
+    printf("%s %s %d %f\n", encryptionStock[1][0] encryptionStock[1][1] encryptionStock[1][2] encryptionStock[1][3]);
+    printf("%s %s %d %f\n", encryptionStock[2][0] encryptionStock[2][1] encryptionStock[2][2] encryptionStock[2][3]);
+    printf("%s %s %d %f\n", encryptionStock[3][0] encryptionStock[3][1] encryptionStock[3][2] encryptionStock[3][3]);
+    printf("%s %s %d %f\n", encryptionStock[4][0] encryptionStock[4][1] encryptionStock[4][2] encryptionStock[4][3]);
+    printf("%s %s %d %f\n", encryptionStock[5][0] encryptionStock[5][1] encryptionStock[5][2] encryptionStock[5][3]);
+    printf("%s %s %d %f\n", encryptionStock[6][0] encryptionStock[6][1] encryptionStock[6][2] encryptionStock[6][3]);
+    printf("%s %s %d %f\n", encryptionStock[7][0] encryptionStock[7][1] encryptionStock[7][2] encryptionStock[7][3]);
+    printf("%s %s %d %f\n", encryptionStock[8][0] encryptionStock[8][1] encryptionStock[8][2] encryptionStock[8][3]);
+    printf("%s %s %d %f\n", encryptionStock[9][0] encryptionStock[9][1] encryptionStock[9][2] encryptionStock[9][3]);
+    printf("Please Select the number of the encryption you would like to buy");
+   
+    If(encryptSelect > 0 && encryptSelect < 11)
+    {
+        printf("You have selected: ");
+        printf("%s", printf("%s", encryptionStock[encryptSelect -1][0]);
+        printf("\n How many would you like to buy?");
+        scanf("\n%d", &amountSelect);
+        int transactionTotal = encryptionStock[encryptSelect -1][2] * amountSelect;
+        printf("\nThis will cost: %d ", transactionTotal);
+        if (player.currentCredits != transactionTotal)
+        {
+            printf("\nInsufficient funds");
+            return;
+        }
+        printf("\nAre you sure? Y/N");
+        scanf(" %c", &yesNo);
+        if (yesNo == 'N' || yesNo == 'n')
+            return;
+        printf("\nThank You!");
+        player.currentCredits = player.currentCredits - transactionTotal;
+        /*
+        So is the starting encryption head? Where does that get initalized?
+        struct Node *newEncryption
+        Data? newEncryption -> encryption = encryptionstock[encryptSelect -1][0]
+        newEncryption -> next = head;
+        head = newEncryption;
+        */
+    }
+    else
+    {
+        printf("Selection out of range");
+        return;
+    }
+}
+
+int main()
+{
     //Initialize game
 
     //initialize equipment structures
     struct Equipment equipmentStock[NUM_EQUIPMENT] = {
-            {"Equipment0", "Equipment0_Description", 10, 100},
-            {"Equipment1", "Equipment1_Description", 10, 100},
-            {"Equipment2", "Equipment2_Description", 10, 100},
-            {"Equipment3", "Equipment3_Description", 10, 100},
-            {"Equipment4", "Equipment4_Description", 10, 100},
-            {"Equipment5", "Equipment5_Description", 10, 100},
-            {"Equipment6", "Equipment6_Description", 10, 100},
-            {"Equipment7", "Equipment7_Description", 10, 100},
-            {"Equipment8", "Equipment8_Description", 10, 100},
-            {"Equipment9", "Equipment9_Description", 10, 100}
-    };
+        {"Equipment0", "Equipment0_Description", 10, 100},
+        {"Equipment1", "Equipment1_Description", 10, 100},
+        {"Equipment2", "Equipment2_Description", 10, 100},
+        {"Equipment3", "Equipment3_Description", 10, 100},
+        {"Equipment4", "Equipment4_Description", 10, 100},
+        {"Equipment5", "Equipment5_Description", 10, 100},
+        {"Equipment6", "Equipment6_Description", 10, 100},
+        {"Equipment7", "Equipment7_Description", 10, 100},
+        {"Equipment8", "Equipment8_Description", 10, 100},
+        {"Equipment9", "Equipment9_Description", 10, 100}};
 
     //initialize encrypt structures
     struct Encryption encryptionStock[NUM_ENCRYPTION] = {
-            {"Encryption0", "Encryption0_Description", 10, 0.75},
-            {"Encryption1", "Encryption1_Description", 10, 0.75},
-            {"Encryption2", "Encryption2_Description", 10, 0.75},
-            {"Encryption3", "Encryption3_Description", 10, 0.75},
-            {"Encryption4", "Encryption4_Description", 10, 0.75},
-            {"Encryption5", "Encryption5_Description", 10, 0.75},
-            {"Encryption6", "Encryption6_Description", 10, 0.75},
-            {"Encryption7", "Encryption7_Description", 10, 0.75},
-            {"Encryption8", "Encryption8_Description", 10, 0.75},
-            {"Encryption9", "Encryption9_Description", 10, 0.75}
-    };
+        {"Encryption0", "Encryption0_Description", 10, 0.75},
+        {"Encryption1", "Encryption1_Description", 10, 0.75},
+        {"Encryption2", "Encryption2_Description", 10, 0.75},
+        {"Encryption3", "Encryption3_Description", 10, 0.75},
+        {"Encryption4", "Encryption4_Description", 10, 0.75},
+        {"Encryption5", "Encryption5_Description", 10, 0.75},
+        {"Encryption6", "Encryption6_Description", 10, 0.75},
+        {"Encryption7", "Encryption7_Description", 10, 0.75},
+        {"Encryption8", "Encryption8_Description", 10, 0.75},
+        {"Encryption9", "Encryption9_Description", 10, 0.75}};
 
     //initialize Attack structures
     struct Attack attackStock[NUM_ATTACK] = {
-            {"Attack0", "Attack0_Description", 1},
-            {"Attack1", "Attack1_Description", 1},
-            {"Attack2", "Attack2_Description", 2},
-            {"Attack3", "Attack3_Description", 2},
-            {"Attack4", "Attack4_Description", 3}
-    };
+        {"Attack0", "Attack0_Description", 1},
+        {"Attack1", "Attack1_Description", 1},
+        {"Attack2", "Attack2_Description", 2},
+        {"Attack3", "Attack3_Description", 2},
+        {"Attack4", "Attack4_Description", 3}};
 
     //initialize 2d of attack effects (encrypt)
     double attackEffectiveness[NUM_ENCRYPTION][NUM_ATTACK] = {
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption0
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption1
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption2
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption3
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption7
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption8
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0} // Encryption9
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption0
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption1
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption2
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption3
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption7
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption8
+        {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}  // Encryption9
     };
 
     //order attacks for game rounds
     Round rounds[NUM_ROUNDS] = {
-            {1, attackStock[0]},
-            {1, attackStock[0]},
-            {2, attackStock[0]},
-            {2, attackStock[0]},
-            {3, attackStock[0]},
+        {1, attackStock[0]},
+        {1, attackStock[0]},
+        {2, attackStock[0]},
+        {2, attackStock[0]},
+        {3, attackStock[0]},
     };
 
     //declare
@@ -122,37 +228,39 @@ int main(){
     /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
 
     //Setup player
-    player.equipmentInventory[0] = 1; /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
+    player.equipmentInventory[0] = 1;                  /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
     player.encryptionInventory = {encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
     player.currentCredits = 30;
 
     //output pregame information
     displayBriefingMessage(&player);
 
-    while(currentRound < NUM_ROUNDS){
+    while (currentRound < NUM_ROUNDS)
+    {
         printf("|================================== Round %2d ==================================|\n", currentRound);
 
         //output player status (if statements)
         //current credit
         printf("Credits: %d\n", player.currentCredits); //current credit
-        
+
         int i;
-        for (i = 0; i < NUM_EQUIPMENT; i++){
+        for (i = 0; i < NUM_EQUIPMENT; i++)
+        {
             // details about the equipment type itself is stored in equipmentStock
             // amount of this equipment type that the player has is stored in equipmentInventory
             printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]);
         } //current equipment
 
-	      //pulls from info from index amount table referencing index struct table
-
+        //pulls from info from index amount table referencing index struct table
 
         struct EncryptionInventory encryptionPointer = *player.encryptionInventory;
-	      while (encryptionPointer != null){
+        while (encryptionPointer != null)
+        {
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
             printf("%s\n", encryptionPointer->encryption->name);
-            encryptionPointer=encryptionPointer->next;
-        }  //current encrypt
+            encryptionPointer = encryptionPointer->next;
+        } //current encrypt
         //iterate and print through current encryption
 
         //receive credits NATHAN
@@ -173,76 +281,108 @@ int main(){
         //increase amount in index amount if things are bought
         //decrease credits if things are bought
 
+        char storeSelect;
+        do
+        {
+            printf("Would you like to buy equiptment? Y/N\n");
+            scanf(" %c", &storeSelect);
+            if (storeSelect == 'Y' || storeSelect == 'y')
+                equipmentstore();
+
+            else
+            {
+                break;
+            }
+         } while (1);
+
         //buying encrypt
         //add pointer to encrypt linked list
         //decrease credits if things are brought
 
-        //selling equipment
-        //decrease amount in index amount if things are sold
-        //increase credit if things are sold
+        do
+        {
+            printf("Would you like to buy encryption? Y/N");;
+            scanf(" %c", &storeSelect);
+            if (storeSelect == 'Y' || storeSelect == 'y')
+                encryptionstore();
 
-        //round is complete
+            else
+            {
+                break;
+            }
+         } while (1);
+
+            
+           
+
+
+
+
+         //selling equipment
+         //decrease amount in index amount if things are sold
+         //increase credit if things are sold
+
+         //round is complete
         currentRound++;
-    }
+            
 
-    //save player score to leaderboard (prototype 2)
+         //save player score to leaderboard (prototype 2)
 
-}
-
-/******************************************************************************
+        /******************************************************************************
 * Function:    briefing
 * Description: Brief the player on how to play the game
 * Parameters:  playerPtr, Player, pointer to the player object
 * Return:      void
 ******************************************************************************/
-void displayBriefingMessage(Player *playerPtr){
-    char pause;
+        void displayBriefingMessage(Player * playerPtr)
+        {
+            char pause;
 
-    //end with printf for line-buffered console timely printing considerations
-    //80 characters is defacto standard output width for consoles
-    printf("/******************************************************************************\\\n");
-    printf("|================== Welcome to Cybersecurity Through History ==================|\n");
-    printf("\\******************************************************************************/\n");
+            //end with printf for line-buffered console timely printing considerations
+            //80 characters is defacto standard output width for consoles
+            printf("/******************************************************************************\\\n");
+            printf("|================== Welcome to Cybersecurity Through History ==================|\n");
+            printf("\\******************************************************************************/\n");
 
-    //keep line spacing as own printf function for easier readability
-    printf("\n");
-    printf("Enter Player Name: ");
-    scanf("%s", &playerPtr->name);
-    //catch "phantom" enter
-    scanf("%c", &pause);
+            //keep line spacing as own printf function for easier readability
+            printf("\n");
+            printf("Enter Player Name: ");
+            scanf("%s", &playerPtr->name);
+            //catch "phantom" enter
+            scanf("%c", &pause);
 
-    printf("\n");
-    printf("|================================== Briefing ==================================|\n");
-    printf("Hello %s, \n", playerPtr->name);
-    printf("\n");
-    printf("Your goal is to send as many confidential messages as possible throughout %d\n", NUM_ROUNDS);
-    printf("rounds. You have two controls: the amount of messages you send via EQUIPMENT,\n");
-    printf("and the amount of messages sent that remain confidential determined by the \n");
-    printf("ENCRYPTION METHOD used.\n");
-    //force player to press enter to continue
-    printf("%80s", "[Press Enter to Continue]");
-    scanf("%c", &pause);
-    printf("\n");
-    printf("At the end of each round, there is a chance that a new ATTACK will have been\n");
-    printf("developed, which will reduce the effectiveness of your current ENCRYPTION \n");
-    printf("METHODS.\n");
-    //force player to press enter to continue
-    printf("%80s", "[Press Enter to Continue]");
-    scanf("%c", &pause);
-    printf("\n");
-    printf("In response, you will enter a store stage where you can buy and sell equipment,\n");
-    printf("and upgrade to a newer encryption method. You will recieve CREDITS for the \n");
-    printf("amount of confidential messages sent each round, which you can spend in the\n");
-    printf("store.\n");
-    //force player to press enter to continue
-    printf("%80s", "[Press Enter to Continue]");
-    scanf("%c", &pause);
-    printf("\n");
-    printf("Good Luck!\n");
-    printf("|============================= Briefing Completed =============================|\n");
+            printf("\n");
+            printf("|================================== Briefing ==================================|\n");
+            printf("Hello %s, \n", playerPtr->name);
+            printf("\n");
+            printf("Your goal is to send as many confidential messages as possible throughout %d\n", NUM_ROUNDS);
+            printf("rounds. You have two controls: the amount of messages you send via EQUIPMENT,\n");
+            printf("and the amount of messages sent that remain confidential determined by the \n");
+            printf("ENCRYPTION METHOD used.\n");
+            //force player to press enter to continue
+            printf("%80s", "[Press Enter to Continue]");
+            scanf("%c", &pause);
+            printf("\n");
+            printf("At the end of each round, there is a chance that a new ATTACK will have been\n");
+            printf("developed, which will reduce the effectiveness of your current ENCRYPTION \n");
+            printf("METHODS.\n");
+            //force player to press enter to continue
+            printf("%80s", "[Press Enter to Continue]");
+            scanf("%c", &pause);
+            printf("\n");
+            printf("In response, you will enter a store stage where you can buy and sell equipment,\n");
+            printf("and upgrade to a newer encryption method. You will recieve CREDITS for the \n");
+            printf("amount of confidential messages sent each round, which you can spend in the\n");
+            printf("store.\n");
+            //force player to press enter to continue
+            printf("%80s", "[Press Enter to Continue]");
+            scanf("%c", &pause);
+            printf("\n");
+            printf("Good Luck!\n");
+            printf("|============================= Briefing Completed =============================|\n");
 
-    //force player to press enter to continue
-    printf("%80s", "[Press Enter to Continue]");
-    scanf("%c", &pause);
-    printf("\n");
-}
+            //force player to press enter to continue
+            printf("%80s", "[Press Enter to Continue]");
+            scanf("%c", &pause);
+            printf("\n");
+        }
