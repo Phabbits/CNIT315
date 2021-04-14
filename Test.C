@@ -234,6 +234,7 @@ void displayBriefingMessage(Player *playerPtr){
     printf("amount of confidential messages sent each round, which you can spend in the\n");
     printf("store.\n");
     //force player to press enter to continue
+    printf("%80s", "[Press Enter to Continue]");
     scanf("%c", &pause);
     printf("Good Luck!\n");
     printf("|============================= Briefing Completed =============================|\n");
