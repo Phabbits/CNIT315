@@ -227,6 +227,7 @@ void displayBriefingMessage(Player *playerPtr){
     printf("developed, which will reduce the effectiveness of your current ENCRYPTION \n");
     printf("METHODS.\n");
     //force player to press enter to continue
+    printf("%80s", "[Press Enter to Continue]");
     scanf("%c", &pause);
     printf("\n");
     printf("In response, you will enter a store stage where you can buy and sell equipment,\n");
@@ -236,9 +237,12 @@ void displayBriefingMessage(Player *playerPtr){
     //force player to press enter to continue
     printf("%80s", "[Press Enter to Continue]");
     scanf("%c", &pause);
+    printf("\n");
     printf("Good Luck!\n");
     printf("|============================= Briefing Completed =============================|\n");
 
     //force player to press enter to continue
+    printf("%80s", "[Press Enter to Continue]");
     scanf("%c", &pause);
+    printf("\n");
 }
