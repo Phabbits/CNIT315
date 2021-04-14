@@ -164,12 +164,15 @@ int main(){
             encryptionPtr = &player.encryptionInventory; // resets 'current' pointer
             int currentLevel = 0;
             double encryptionEffectiveness = 0.0;
-            while (encryptionPtr != NULL) { // traverses encryptionInventory looking for highest level allowed for equipment (assumes ordered list)
-                //if the encryption level is not allowed for the equipment, end the loop
-                if (encryptionPtr->encryption.level > equipmentStock[i].maxEncryptionLevel) {
-                    break;
+            while (encryptionPtr != NULL) { // traverses encryptionInventory looking for highest level allowed for equipment 
+                // ensure encryption method is available for this type of equipment
+                if (encryptionPtr->encryption.level <= equipmentStock[i].maxEncryptionLevel){
+                    // check if encryption method effectiveness is greater than the previous max
+                    if (encryptionPtr->encryption.effectiveness > encryptionEffectiveness){
+                        encryptionEffectiveness = encryptionPtr->encryption.effectiveness;
+                    }
                 }
-                encryptionEffectiveness = encryptionPtr->encryption.effectiveness;
+                
                 encryptionPtr = encryptionPtr->next;
             }
 			newCredits += equipmentStock[i].messageAmount * player.equipmentInventory[i] * encryptionEffectiveness; //sum message amount of equipment(s)
