@@ -228,6 +228,7 @@ void displayBriefingMessage(Player *playerPtr){
     printf("METHODS.\n");
     //force player to press enter to continue
     scanf("%c", &pause);
+    printf("\n");
     printf("In response, you will enter a store stage where you can buy and sell equipment,\n");
     printf("and upgrade to a newer encryption method. You will recieve CREDITS for the \n");
     printf("amount of confidential messages sent each round, which you can spend in the\n");
