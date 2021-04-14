@@ -155,18 +155,15 @@ int main(){
         } //end while loop
 		
         //iterate and print through current encryption
-    }
         
     //receive credits
-		int sum;
-		int newCredits;
+		int sum = 0;
+		int newCredits = 0;
 		printf("Original credits: %d\n", player.currentCredits); //prints out the current credits the player has
 
-    //use equation to figure out how many credit user receives
-		newCredits = player.currentCredits * Encryption.effectiveness * Equipment.messageAmount;
 		
-		for (int i = 0; i < equipment; i++){
-			sum += equipmentStock[i] * equipmentInventory[i]; //sum message amount of equipment(s)
+		for (int i = 0; i < NUM_EQUIPMENT; i++){
+			sum += equipmentStock[i].messageAmount * player.equipmentInventory[i]; //sum message amount of equipment(s)
 		}
 		
 		//multiply the sum player.encryptionInventory.encryption.effectiveness; 
