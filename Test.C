@@ -220,6 +220,7 @@ void displayBriefingMessage(Player *playerPtr){
     printf("and the amount of messages sent that remain confidential determined by the \n");
     printf("ENCRYPTION METHOD used.\n");
     //force player to press enter to continue
+    printf("%80s", "[Press Enter to Continue]");
     scanf("%c", &pause);
     printf("At the end of each round, there is a chance that a new ATTACK will have been\n");
     printf("developed, which will reduce the effectiveness of your current ENCRYPTION \n");
