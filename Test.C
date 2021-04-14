@@ -182,8 +182,44 @@ int main(){
         //selling equipment
         //decrease amount in index amount if things are sold
         //increase credit if things are sold
+        //So this is a lot of pseudo code or not finished but idk how to do it fully but it a good framework 
+        //assumes that you can sell the equipment for the same price that is bought 
+        int equipSellSelect;
+        int equipSellAmount;
+        int equipSellTransaction;
+        int equipSellAnswer;
+        
+        printf("|----------------------------- Equipment Selling ------------------------------|\n");
+        printf("Equipment that you own:\n");
+        //print equipment that is owned 
+        printf("Your current credits are: %d\n", player.currentCredits); //current credit
+        printf("Please select the equipment you would like to sell or select 11 to pass: "); //chose 11 becuase there are 10 options rn
+        scanf("\n%d", &equipSellSelect);
+
+        while (equipSellSelect > 11) //while the user is selecting something to sell and not choseing to pass
+        {
+            printf("You have selected: ");
+            printf("%s", equipmentStock[0][0]); //not sure if that should be equipmentStock or not
+            printf("\n How many would you like to buy? ");
+            scanf("\n%d", &equipSellAmount);
+            equipSellTransaction = equipmentStock[0][2] * equipSellAmount; //not sure if that should be equipmentStock or not
+            printf("This will sell for: %d", equipSellTransaction);
+            printf("Are you sure you want to sell? Enter 1 for Yes or 2 for No ");
+            scanf("\n%d", &equipSellAnswer);
+            if (equipSellAnswer == 1)
+            {
+                printf("Thank You!");
+                player.currentCredits = player.currentCredits + equipSellTransaction;
+                printf("Your current credits are: %d\n", player.currentCredits); //current credit
+                player.equipmentInventory[0]= player.equipmentInventory[0] - equipSellAmount; //removes equip from inventor prob wrong
+            }
+            //print equipment that is owned
+            printf("Please select the equipment you would like to sell or select 11 to pass: ");
+            scanf("\n%d", &equipSellSelect);
+        }
 
         //round is complete
+        printf("|======================= This is the end of round %2d =========================|\n", currentRound);
         currentRound++;
     }
 
