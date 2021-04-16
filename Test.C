@@ -304,7 +304,7 @@ int main()
         char storeSelect;
         do
         {
-            printf("Would you like to buy equiptment? Y/N\n");
+            printf("Would you like to buy equipment? y/N\n");
             scanf(" %c", &storeSelect);
             if (storeSelect == 'Y' || storeSelect == 'y')
                 equipmentstore();
