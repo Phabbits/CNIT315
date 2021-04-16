@@ -64,7 +64,7 @@ void equipmentStore()
     int transactionTotal;
     char yesNo;
 
-    printf("|-------------------------------- Equipment Store --------------------------------|\n");
+    printf("|------------------------------ Equipment  Store ------------------------------|\n");
     printf("%s %s %d %d\n", equipmentStock[0][0] equipmentStock[0][1] equiptmentStock[0][2] equiptmentStock[0][3]);
     printf("%s %s %d %d\n", equipmentStock[1][0] equipmentStock[1][1] equiptmentStock[1][2] equiptmentStock[1][3]);
     printf("%s %s %d %d\n", equipmentStock[2][0] equipmentStock[2][1] equiptmentStock[2][2] equiptmentStock[2][3]);
