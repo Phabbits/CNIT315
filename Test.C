@@ -65,20 +65,15 @@ void equipmentStore(struct Player *playerPtr)
     char yesNo;
 
     printf("|------------------------------ Equipment  Store ------------------------------|\n");
-    printf("%s %s %d %d\n", equipmentStock[0][0] equipmentStock[0][1] equiptmentStock[0][2] equiptmentStock[0][3]);
-    printf("%s %s %d %d\n", equipmentStock[1][0] equipmentStock[1][1] equiptmentStock[1][2] equiptmentStock[1][3]);
-    printf("%s %s %d %d\n", equipmentStock[2][0] equipmentStock[2][1] equiptmentStock[2][2] equiptmentStock[2][3]);
-    printf("%s %s %d %d\n", equipmentStock[3][0] equipmentStock[3][1] equiptmentStock[3][2] equiptmentStock[3][3]);
-    printf("%s %s %d %d\n", equipmentStock[4][0] equipmentStock[4][1] equiptmentStock[4][2] equiptmentStock[4][3]);
-    printf("%s %s %d %d\n", equipmentStock[5][0] equipmentStock[5][1] equiptmentStock[5][2] equiptmentStock[5][3]);
-    printf("%s %s %d %d\n", equipmentStock[6][0] equipmentStock[6][1] equiptmentStock[6][2] equiptmentStock[6][3]);
-    printf("%s %s %d %d\n", equipmentStock[7][0] equipmentStock[7][1] equiptmentStock[7][2] equiptmentStock[7][3]);
-    printf("%s %s %d %d\n", equipmentStock[8][0] equipmentStock[8][1] equiptmentStock[8][2] equiptmentStock[8][3]);
-    printf("%s %s %d %d\n", equipmentStock[9][0] equipmentStock[9][1] equiptmentStock[9][2] equiptmentStock[9][3]);
+
+    for(int x = 0; x < NUM_EQUIPMENT; x++){ 
+        printf("%s %s %d %d\n", equipmentStock[x][0] equipmentStock[x][1] equiptmentStock[x][2] equiptmentStock[x][3]);
+    }
+
     printf("\nPlease Select the number of the equipment you would like to buy"); //1-10 input
     scanf("\n%d", &equipmentSelect);
 
-    If(equipmentSelect > 0 && equipmentSelect < (NUM_EQUIPMENT + 1)) //if in range
+    if (equipmentSelect > 0 && equipmentSelect < (NUM_EQUIPMENT + 1)) //if in range
     {
         printf("You have selected: ");
         printf("%s", equipmentStock[equipmentselect - 1][0]);
@@ -106,7 +101,7 @@ void equipmentStore(struct Player *playerPtr)
     }
 }
 
-void encryptionStore()
+void encryptionStore(struct Player *playerPtr)
 {
     int encryptSelect;
     int amountSelect;
@@ -114,19 +109,13 @@ void encryptionStore()
     char yesNo;
 
     printf("|-------------------------------- Encryption Store --------------------------------|\n");
-    printf("%s %s %d %f\n", encryptionStock[0][0] encryptionStock[0][1] encryptionStock[0][2] encryptionStock[0][3]);
-    printf("%s %s %d %f\n", encryptionStock[1][0] encryptionStock[1][1] encryptionStock[1][2] encryptionStock[1][3]);
-    printf("%s %s %d %f\n", encryptionStock[2][0] encryptionStock[2][1] encryptionStock[2][2] encryptionStock[2][3]);
-    printf("%s %s %d %f\n", encryptionStock[3][0] encryptionStock[3][1] encryptionStock[3][2] encryptionStock[3][3]);
-    printf("%s %s %d %f\n", encryptionStock[4][0] encryptionStock[4][1] encryptionStock[4][2] encryptionStock[4][3]);
-    printf("%s %s %d %f\n", encryptionStock[5][0] encryptionStock[5][1] encryptionStock[5][2] encryptionStock[5][3]);
-    printf("%s %s %d %f\n", encryptionStock[6][0] encryptionStock[6][1] encryptionStock[6][2] encryptionStock[6][3]);
-    printf("%s %s %d %f\n", encryptionStock[7][0] encryptionStock[7][1] encryptionStock[7][2] encryptionStock[7][3]);
-    printf("%s %s %d %f\n", encryptionStock[8][0] encryptionStock[8][1] encryptionStock[8][2] encryptionStock[8][3]);
-    printf("%s %s %d %f\n", encryptionStock[9][0] encryptionStock[9][1] encryptionStock[9][2] encryptionStock[9][3]);
+
+    for(int x = 0; x < NUM_EQUIPMENT; x++){ 
+        printf("%s %s %d %d\n", equipmentStock[x][0] equipmentStock[x][1] equiptmentStock[x][2] equiptmentStock[x][3]);
+    }
     printf("Please Select the number of the encryption you would like to buy");
    
-    If(encryptSelect > 0 && encryptSelect < 11)
+    if (encryptSelect > 0 && encryptSelect < (NUM_EQUIPMENT + 1)))
     {
         printf("You have selected: ");
         printf("%s", printf("%s", encryptionStock[encryptSelect -1][0]);
@@ -145,13 +134,18 @@ void encryptionStore()
             return;
         printf("\nThank You!");
         player.currentCredits = player.currentCredits - transactionTotal;
-        /*
-        So is the starting encryption head? Where does that get initalized?
-        struct Node *newEncryption
-        Data? newEncryption -> encryption = encryptionstock[encryptSelect -1][0]
-        newEncryption -> next = head;
-        head = newEncryption;
-        */
+
+        struct Node *newEncryption;
+        newEncryption = (struct EncryptionInventory *)malloc(sizeof(struct EncryptionInventory));
+        newEncryption -> encryption = encryptionstock[encryptSelect -1][0];
+        newEncryption->next = NULL;
+        struct Node *temp = player.encryptionInventory;
+
+        while (temp->next != NULL) 
+            {
+                temp = temp->next;
+            }
+            temp->next = newEncryption; 
     }
     else
     {
@@ -307,7 +301,7 @@ int main()
             printf("Would you like to buy equipment? y/N\n");
             scanf(" %c", &storeSelect);
             if (storeSelect == 'Y' || storeSelect == 'y')
-                equipmentstore();
+                equipmentstore(Player.currentCredits);
 
             else
             {
@@ -324,7 +318,7 @@ int main()
             printf("Would you like to buy encryption? Y/N");;
             scanf(" %c", &storeSelect);
             if (storeSelect == 'Y' || storeSelect == 'y')
-                encryptionstore();
+                encryptionstore(Player.currentCredits);
 
             else
             {
