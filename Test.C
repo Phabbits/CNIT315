@@ -76,7 +76,7 @@ void equipmentStore()
     printf("%s %s %d %d\n", equipmentStock[8][0] equipmentStock[8][1] equiptmentStock[8][2] equiptmentStock[8][3]);
     printf("%s %s %d %d\n", equipmentStock[9][0] equipmentStock[9][1] equiptmentStock[9][2] equiptmentStock[9][3]);
     printf("\nPlease Select the number of the equipment you would like to buy"); //1-10 input
-    scanf("\n%d", &equipSelect);
+    scanf("\n%d", &equipmentSelect);
 
     If(equipSelect > 0 && equipSelect < 11) //if in range
     {
