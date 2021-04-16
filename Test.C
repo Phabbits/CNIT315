@@ -57,7 +57,7 @@ struct Round
 //Function prototypes
 void displayBriefingMessage(Player *playerPtr);
 
-void equipmentStore()
+void equipmentStore(struct Player *playerPtr)
 {
     int equipmentSelect;
     int amountSelect;
