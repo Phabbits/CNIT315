@@ -59,7 +59,7 @@ void displayBriefingMessage(Player *playerPtr);
 
 void equipmentStore()
 {
-    int equipSelect;
+    int equipmentSelect;
     int amountSelect;
     int transactionTotal;
     char yesNo;
