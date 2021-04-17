@@ -276,7 +276,7 @@ int main(){
                 printf("The transcation was canceled\n");
             }
             // print equipment that is owned
-            for(int i = 0; i < NUM_EQUIPMENT; i++){
+            for(int i=0; i<NUM_EQUIPMENT; i++){
                 printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
                 printf("Amount of %s that is in your inventory: %d", equipmentStock[i].name, player.equipmentInventory[i]);
             }
