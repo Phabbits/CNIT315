@@ -240,7 +240,7 @@ int main(){
         int equipSellSelect;
         int equipSellAmount;
         int equipSellTransaction;
-        int equipSellAnswer;
+        char equipSellAnswer;
         
         printf("|----------------------------- Equipment Selling ------------------------------|\n");
         printf("Equipment that you own:\n");
@@ -250,17 +250,17 @@ int main(){
         }
         printf("Your current credits are: %d\n", player.currentCredits); // current credit
         printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); // chose 11 becuase there are 10 options rn
-        scanf("\n%d", &equipSellSelect);
+        scanf("%d", &equipSellSelect);
 
         while (equipSellSelect < NUM_EQUIPMENT){ // while the user is selecting something to sell and not choseing to pass
             printf("You have selected: %s\n", equipmentStock[0].name); // not sure if that should be equipmentStock or not
             printf("How many would you like to sell?\n");
             scanf("%d", &equipSellAmount);
             equipSellTransaction = equipmentStock[0].cost * equipSellAmount; // not sure if that should be equipmentStock or not
-            printf("This will sell for: %d", equipSellTransaction);
+            printf("This will sell for: %d\n", equipSellTransaction);
             printf("Are you sure you want to sell? y/N ");
-            scanf("%d", &equipSellAnswer);
-            if (equipSellAnswer == "y" || equipSellAnswer == "Y"){ 
+            scanf(" %c", &equipSellAnswer);
+            if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){ 
                 if (player.equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
                     printf("Thank You!\n");
                     player.currentCredits = player.currentCredits + equipSellTransaction;
@@ -272,7 +272,7 @@ int main(){
                     printf("The transcation was canceled\n");
                 }
             }
-            if (equipSellAnswer == "n" || equipSellAnswer == "N"){
+            if (equipSellAnswer == 'n' || equipSellAnswer == 'N'){
                 printf("The transcation was canceled\n");
             }
             // print equipment that is owned
