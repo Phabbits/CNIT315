@@ -268,8 +268,8 @@ int main(){
                     player.equipmentInventory[0]= player.equipmentInventory[0] - equipSellAmount; 
                 }
                 if (player.equipmentInventory == 0){ // checks that the user has the item in thier inventory
-                    printf("You do not have any of this equipment in your inventory");
-                    printf("The transcation was canceled");
+                    printf("You do not have any of this equipment in your inventory\n");
+                    printf("The transcation was canceled\n");
                 }
             }
             if (equipSellAnswer == "n" || equipSellAnswer == "N"){
