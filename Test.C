@@ -281,7 +281,7 @@ int main(){
                 printf("Amount of %s that is in your inventory: %d", equipmentStock[i].name, player.equipmentInventory[i]);
             }
             printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
-            scanf("\n%d", &equipSellSelect);
+            scanf("%d", &equipSellSelect);
         }
 
         // round is complete
