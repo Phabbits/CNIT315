@@ -246,7 +246,7 @@ int main(){
         printf("Equipment that you own:\n");
         for(int i=0; i<NUM_EQUIPMENT; i++){
             printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
-            printf("Amount of %s that is in your inventory: %d", equipmentStock[i].name, player.equipmentInventory[i]);
+            printf("Amount of %s that is in your inventory: %d\n", equipmentStock[i].name, player.equipmentInventory[i]);
         }
         printf("Your current credits are: %d\n", player.currentCredits); // current credit
         printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); // chose 11 becuase there are 10 options rn
