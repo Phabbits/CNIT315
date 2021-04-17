@@ -85,17 +85,17 @@ void equipmentStore(struct Player *playerPtr)
             printf("\nInsufficient funds");
             return; //lazy return lol
         }
-        printf("\nAre you sure? Y/N");
+        printf("\nAre you sure? Y/n");
         scanf(" %c", &yesNo);
-        if (yesNo == 'N' || yesNo == 'n')
-            return;
-        printf("\nThank You!");
-        player.currentCredits = player.currentCredits - transactionTotal;
-        player.equipmentInventory[equipmentselect - 1] = player.equipmentInventory[equipmentselect - 1] + amountSelect;
+        if (yesNo == 'Y' || yesNo == 'y'){
+            printf("\nThank You!");
+            player.currentCredits = player.currentCredits - transactionTotal;
+            player.equipmentInventory[equipmentselect - 1] = player.equipmentInventory[equipmentselect - 1] + amountSelect;
+        }
     }
     else
     {
-        printf("Selection out of range");
+        printf("Selection out of range\n");
         return;
     }
 }
@@ -107,12 +107,15 @@ void encryptionStore(struct Player *playerPtr)
     int transactionTotal;
     char yesNo;
 
-    printf("|-------------------------------- Encryption Store --------------------------------|\n");
+    printf("|------------------------------ Encryption Store ------------------------------|\n");
 
     for(int i = 0; i < NUM_ENCRYPTION; i++){ 
         printf("%s %s %d %d\n", encryptionStock[i].name, encryptionStock[i].description, encryptionStock[i].cost, encryptionStock[i].effectiveness);
     }
     printf("Please Select the number of the encryption you would like to buy");
+   scanf("%d", &encryptSelect);
+   // adjust encryption selection by one, since user input starts at one and not zero
+   encryptSelect -= 1;
    
     if (encryptSelect > 0 && encryptSelect < (NUM_EQUIPMENT + 1)))
     {
