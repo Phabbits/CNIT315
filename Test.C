@@ -130,7 +130,7 @@ void encryptionStore(struct Player *playerPtr)
             printf("\nInsufficient funds");
             return;
         }
-        printf("\nAre you sure? Y/N");
+        printf("\nAre you sure? Y/n");
         scanf(" %c", &yesNo);
         if (yesNo == 'N' || yesNo == 'n')
             return;
