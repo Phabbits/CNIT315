@@ -66,7 +66,7 @@ void equipmentStore(struct Player *playerPtr)
 
     printf("|------------------------------ Equipment  Store ------------------------------|\n");
     for(int i = 0; i < NUM_EQUIPMENT; i++){ 
-        printf("%s %s %d %d\n", equipmentStock[i]->name, equipmentStock[i]->description, equiptmentStock[i]->cost, equiptmentStock[i]->messageAmount);
+        printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equiptmentStock[i].cost, equiptmentStock[i].messageAmount);
     }
 
     printf("\nPlease Select the number of the equipment you would like to buy"); //1-10 input
@@ -75,10 +75,10 @@ void equipmentStore(struct Player *playerPtr)
     if (equipmentSelect > 0 && equipmentSelect < (NUM_EQUIPMENT + 1)) //if in range
     {
         printf("You have selected: ");
-        printf("%s", equipmentStock[equipmentselect - 1]->name);
+        printf("%s", equipmentStock[equipmentselect - 1].name);
         printf("\n How many would you like to buy?");
         scanf("\n%d", &amountSelect);
-        int transactionTotal = equipmentStock[equipmentselect - 1]->cost * amountSelect;
+        int transactionTotal = equipmentStock[equipmentselect - 1].cost * amountSelect;
         printf("\nThis will cost: %d ", transactionTotal);
         if (player.currentCredits != transactionTotal) //credit check
         {
@@ -110,17 +110,17 @@ void encryptionStore(struct Player *playerPtr)
     printf("|-------------------------------- Encryption Store --------------------------------|\n");
 
     for(int i = 0; i < NUM_ENCRYPTION; i++){ 
-        printf("%s %s %d %d\n", encryptionStock[i]->name, encryptionStock[i]->description, encryptionStock[i]->cost, encryptionStock[i]->effectiveness);
+        printf("%s %s %d %d\n", encryptionStock[i].name, encryptionStock[i].description, encryptionStock[i].cost, encryptionStock[i].effectiveness);
     }
     printf("Please Select the number of the encryption you would like to buy");
    
     if (encryptSelect > 0 && encryptSelect < (NUM_EQUIPMENT + 1)))
     {
         printf("You have selected: ");
-        printf("%s", printf("%s", encryptionStock[encryptSelect -1]->name);
+        printf("%s", printf("%s", encryptionStock[encryptSelect -1].name);
         printf("\n How many would you like to buy?");
         scanf("\n%d", &amountSelect);
-        int transactionTotal = encryptionStock[encryptSelect -1]->cost * amountSelect;
+        int transactionTotal = encryptionStock[encryptSelect -1].cost * amountSelect;
         printf("\nThis will cost: %d ", transactionTotal);
         if (player.currentCredits != transactionTotal)
         {
