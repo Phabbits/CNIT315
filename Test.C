@@ -273,7 +273,7 @@ int main(){
                 }
             }
             if (equipSellAnswer == "n" || equipSellAnswer == "N"){
-                printf("The transcation was canceled");
+                printf("The transcation was canceled\n");
             }
             // print equipment that is owned
             for(int i = 0; i < NUM_EQUIPMENT; i++){
