@@ -215,7 +215,7 @@ int main(){
                 player.equipmentInventory[0]= player.equipmentInventory[0] - equipSellAmount; //removes equip from inventor prob wrong
             }
             //print equipment that is owned
-            printf("Please select the equipment you would like to sell or select 11 to pass: ");
+            printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
             scanf("\n%d", &equipSellSelect);
         }
 
