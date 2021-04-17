@@ -194,7 +194,7 @@ int main(){
         printf("Equipment that you own:\n");
         //print equipment that is owned 
         printf("Your current credits are: %d\n", player.currentCredits); //current credit
-        printf("Please select the equipment you would like to sell or select 11 to pass: "); //chose 11 becuase there are 10 options rn
+        printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); //chose 11 becuase there are 10 options rn
         scanf("\n%d", &equipSellSelect);
 
         while (equipSellSelect > 11) //while the user is selecting something to sell and not choseing to pass
