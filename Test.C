@@ -17,6 +17,7 @@ struct Equipment
     char description[DESCRIPTION_LENGTH]; // short description of Equipment
     int cost;                             // cost of the Equipment
     int messageAmount;                    // number of messages able to be sent
+    int maxEncryptionLevel;               // maximum level of encryption the particular piece of equipment can perform
 };
 
 struct Encryption
@@ -25,6 +26,7 @@ struct Encryption
     char description[DESCRIPTION_LENGTH]; // short description of how encryption works
     int cost;                             // cost of the encryption
     double effectiveness;                 // how effective the encryption is (percentage)
+    int level;                            // the level of the encryption (used to limit available encryption methods on equipment)
 };
 
 struct Attack
@@ -162,29 +164,31 @@ int main()
 
     //initialize equipment structures
     struct Equipment equipmentStock[NUM_EQUIPMENT] = {
-        {"Equipment0", "Equipment0_Description", 10, 100},
-        {"Equipment1", "Equipment1_Description", 10, 100},
-        {"Equipment2", "Equipment2_Description", 10, 100},
-        {"Equipment3", "Equipment3_Description", 10, 100},
-        {"Equipment4", "Equipment4_Description", 10, 100},
-        {"Equipment5", "Equipment5_Description", 10, 100},
-        {"Equipment6", "Equipment6_Description", 10, 100},
-        {"Equipment7", "Equipment7_Description", 10, 100},
-        {"Equipment8", "Equipment8_Description", 10, 100},
-        {"Equipment9", "Equipment9_Description", 10, 100}};
+            {"Equipment0", "Equipment0_Description", 10, 100, 10},
+            {"Equipment1", "Equipment1_Description", 10, 100, 10},
+            {"Equipment2", "Equipment2_Description", 10, 100, 10},
+            {"Equipment3", "Equipment3_Description", 10, 100, 10},
+            {"Equipment4", "Equipment4_Description", 10, 100, 10},
+            {"Equipment5", "Equipment5_Description", 10, 100, 10},
+            {"Equipment6", "Equipment6_Description", 10, 100, 10},
+            {"Equipment7", "Equipment7_Description", 10, 100, 10},
+            {"Equipment8", "Equipment8_Description", 10, 100, 10},
+            {"Equipment9", "Equipment9_Description", 10, 100, 10}
+    };
 
     //initialize encrypt structures
     struct Encryption encryptionStock[NUM_ENCRYPTION] = {
-        {"Encryption0", "Encryption0_Description", 10, 0.75},
-        {"Encryption1", "Encryption1_Description", 10, 0.75},
-        {"Encryption2", "Encryption2_Description", 10, 0.75},
-        {"Encryption3", "Encryption3_Description", 10, 0.75},
-        {"Encryption4", "Encryption4_Description", 10, 0.75},
-        {"Encryption5", "Encryption5_Description", 10, 0.75},
-        {"Encryption6", "Encryption6_Description", 10, 0.75},
-        {"Encryption7", "Encryption7_Description", 10, 0.75},
-        {"Encryption8", "Encryption8_Description", 10, 0.75},
-        {"Encryption9", "Encryption9_Description", 10, 0.75}};
+            {"Encryption0", "Encryption0_Description", 10, 0.75, 1},
+            {"Encryption1", "Encryption1_Description", 10, 0.75, 2},
+            {"Encryption2", "Encryption2_Description", 10, 0.75, 3},
+            {"Encryption3", "Encryption3_Description", 10, 0.75, 4},
+            {"Encryption4", "Encryption4_Description", 10, 0.75, 5},
+            {"Encryption5", "Encryption5_Description", 10, 0.75, 6},
+            {"Encryption6", "Encryption6_Description", 10, 0.75, 7},
+            {"Encryption7", "Encryption7_Description", 10, 0.75, 8},
+            {"Encryption8", "Encryption8_Description", 10, 0.75, 9},
+            {"Encryption9", "Encryption9_Description", 10, 0.75, 10}
+    };
 
     //initialize Attack structures
     struct Attack attackStock[NUM_ATTACK] = {
@@ -228,11 +232,13 @@ int main()
     player.encryptionInventory = {encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
     player.currentCredits = 30;
 
+    //Setup encryption 'current' pointer
+    struct EncryptionInventory *encryptionPtr = &player.encryptionInventory;
+
     //output pregame information
     displayBriefingMessage(&player);
 
-    while (currentRound < NUM_ROUNDS)
-    {
+    while(currentRound < NUM_ROUNDS) {
         printf("|================================== Round %2d ==================================|\n", currentRound);
 
         //output player status (if statements)
@@ -244,35 +250,42 @@ int main()
         {
             // details about the equipment type itself is stored in equipmentStock
             // amount of this equipment type that the player has is stored in equipmentInventory
-            printf("%s: %d\n", equipmentStock[i]->name, player.equipmentInventory[i]);
+            printf("%s: %d\n", equipmentStock[i].name, player.equipmentInventory[i]);
         } //end for loop
 
         //pulls from info from index amount table referencing index struct table
 
-        struct EncryptionInventory encryptionPointer = *player.encryptionInventory;
-        while (encryptionPointer != null)
-        {
+
+        while (encryptionPtr != NULL) {
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf("%s\n", encryptionPointer->encryption->name); //current encrypt
-            encryptionPointer = encryptionPointer->next; //pointer
+            printf("%s\n", encryptionPtr->encryption.name); //current encrypt
+            encryptionPtr = encryptionPtr->next; //pointer
         } //end while loop
-        //iterate and print through current encryption
-        
-    //receive credits
-		int sum = 0;
+
+        //receive credits
+
 		int newCredits = 0;
 		printf("Original credits: %d\n", player.currentCredits); //prints out the current credits the player has
 
-		
 		for (int i = 0; i < NUM_EQUIPMENT; i++){
-			sum += equipmentStock[i].messageAmount * player.equipmentInventory[i]; //sum message amount of equipment(s)
+            encryptionPtr = &player.encryptionInventory; // resets 'current' pointer
+            int currentLevel = 0;
+            double encryptionEffectiveness = 0.0;
+            while (encryptionPtr != NULL) { // traverses encryptionInventory looking for highest level allowed for equipment 
+                // ensure encryption method is available for this type of equipment
+                if (encryptionPtr->encryption.level <= equipmentStock[i].maxEncryptionLevel){
+                    // check if encryption method effectiveness is greater than the previous max
+                    if (encryptionPtr->encryption.effectiveness > encryptionEffectiveness){
+                        encryptionEffectiveness = encryptionPtr->encryption.effectiveness;
+                    }
+                }
+                
+                encryptionPtr = encryptionPtr->next;
+            }
+			newCredits += equipmentStock[i].messageAmount * player.equipmentInventory[i] * encryptionEffectiveness; //sum message amount of equipment(s)
 		}
-		
-		//multiply the sum player.encryptionInventory.encryption.effectiveness; 
-			//TODO: figure out which encryption was chosen
-		newCredits = sum * player.encryptionInventory.encryption.effectiveness; //number of credits player receives
-		
+
 		player.currentCredits += newCredits; //adding credits to currentCredits
 		
         //tell user how credits received and what encrypt method was used
