@@ -66,8 +66,9 @@ void equipmentStore(struct Player *playerPtr)
 
     printf("|------------------------------ Equipment  Store ------------------------------|\n");
 
-    for(int x = 0; x < NUM_EQUIPMENT; x++){ 
-        printf("%s %s %d %d\n", equipmentStock[x][0] equipmentStock[x][1] equiptmentStock[x][2] equiptmentStock[x][3]);
+    int i;
+    for(i=0; i<NUM_EQUIPMENT; i++){ 
+        printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equiptmentStock[i].cost, equiptmentStock[i].messageAmount);
     }
 
     printf("\nPlease Select the number of the equipment you would like to buy"); //1-10 input
