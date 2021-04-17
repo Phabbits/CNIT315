@@ -197,7 +197,7 @@ int main(){
         printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); //chose 11 becuase there are 10 options rn
         scanf("\n%d", &equipSellSelect);
 
-        while (equipSellSelect > 11) //while the user is selecting something to sell and not choseing to pass
+        while (equipSellSelect < NUM_EQUIPMENT) //while the user is selecting something to sell and not choseing to pass
         {
             printf("You have selected: ");
             printf("%s", equipmentStock[0][0]); //not sure if that should be equipmentStock or not
