@@ -207,7 +207,7 @@ int main(){
             printf("This will sell for: %d", equipSellTransaction);
             printf("Are you sure you want to sell? y/N");
             scanf("\n%d", &equipSellAnswer);
-            if (equipSellAnswer == 1)
+            if (equipSellAnswer == "y" || equipSellAnswer == "Y")
             {
                 printf("Thank You!");
                 player.currentCredits = player.currentCredits + equipSellTransaction;
