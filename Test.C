@@ -205,7 +205,7 @@ int main(){
             scanf("\n%d", &equipSellAmount);
             equipSellTransaction = equipmentStock[0][2] * equipSellAmount; //not sure if that should be equipmentStock or not
             printf("This will sell for: %d", equipSellTransaction);
-            printf("Are you sure you want to sell? Enter 1 for Yes or 2 for No ");
+            printf("Are you sure you want to sell? y/N");
             scanf("\n%d", &equipSellAnswer);
             if (equipSellAnswer == 1)
             {
