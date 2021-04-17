@@ -244,7 +244,7 @@ int main(){
         
         printf("|----------------------------- Equipment Selling ------------------------------|\n");
         printf("Equipment that you own:\n");
-        for(int i = 0; i < NUM_EQUIPMENT; i++){
+        for(int i=0; i<NUM_EQUIPMENT; i++){
             printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
             printf("Amount of %s that is in your inventory: %d", equipmentStock[i].name, player.equipmentInventory[i]);
         }
