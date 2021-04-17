@@ -285,7 +285,7 @@ int main(){
         }
 
         // round is complete
-        printf("|======================= This is the end of round %2d =========================|\n", currentRound);
+        printf("|======================= This is the end of round %2d =========================|\n", currentRound + 1);
 
         // round is complete
         currentRound++;
