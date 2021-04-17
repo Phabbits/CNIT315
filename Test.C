@@ -256,16 +256,16 @@ int main(){
             printf("You have selected: %s\n", equipmentStock[0].name); // not sure if that should be equipmentStock or not
             printf("How many would you like to sell?\n");
             scanf("%d", &equipSellAmount);
-            equipSellTransaction = equipmentStock[0][2] * equipSellAmount; // not sure if that should be equipmentStock or not
+            equipSellTransaction = equipmentStock[0].cost * equipSellAmount; // not sure if that should be equipmentStock or not
             printf("This will sell for: %d", equipSellTransaction);
-            printf("Are you sure you want to sell? y/N");
-            scanf("\n%d", &equipSellAnswer);
+            printf("Are you sure you want to sell? y/N ");
+            scanf("%d", &equipSellAnswer);
             if (equipSellAnswer == "y" || equipSellAnswer == "Y"){ 
                 if (player.equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
-                    printf("Thank You!");
+                    printf("Thank You!\n");
                     player.currentCredits = player.currentCredits + equipSellTransaction;
-                    printf("Your current credits are: %d\n", player.currentCredits); //current credit
-                    player.equipmentInventory[0]= player.equipmentInventory[0] - equipSellAmount; 
+                    printf("Your current credits are: %d\n", player.currentCredits); // current credit
+                    player.equipmentInventory[0] = player.equipmentInventory[0] - equipSellAmount; 
                 }
                 if (player.equipmentInventory == 0){ // checks that the user has the item in thier inventory
                     printf("You do not have any of this equipment in your inventory\n");
