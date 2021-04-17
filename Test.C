@@ -199,8 +199,7 @@ int main(){
 
         while (equipSellSelect < NUM_EQUIPMENT) //while the user is selecting something to sell and not choseing to pass
         {
-            printf("You have selected: ");
-            printf("%s", equipmentStock[0][0]); //not sure if that should be equipmentStock or not
+            printf("You have selected: %s", equipmentStock[0].name); //not sure if that should be equipmentStock or not
             printf("\n How many would you like to sell? ");
             scanf("\n%d", &equipSellAmount);
             equipSellTransaction = equipmentStock[0][2] * equipSellAmount; //not sure if that should be equipmentStock or not
