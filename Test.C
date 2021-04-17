@@ -180,7 +180,7 @@ int main(){
 
                 encryptionPtr = encryptionPtr->next;
             }
-            newCredits += equipmentStock[i].messageAmount * player.equipmentInventory[i] * encryptionEffectiveness; //sum message amount of equipment(s)
+            newCredits += equipmentStock[i].messageAmount * player.equipmentInventory[i] * encryptionEffectiveness; // sum message amount of equipment(s)
         }
 
         player.currentCredits += newCredits; // adding credits to currentCredits
