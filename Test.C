@@ -7,8 +7,8 @@
 #define DESCRIPTION_LENGTH 200
 #define NUM_EQUIPMENT 6
 #define NUM_ENCRYPTION 8
-#define NUM_ATTACK 5
-#define NUM_ROUNDS 5
+#define NUM_ATTACK 7
+#define NUM_ROUNDS 20
 
 // Define structures
 struct Equipment{
@@ -34,7 +34,7 @@ struct Attack{
 };
 
 struct EncryptionInventory{
-    Encryption encryption;     // the data
+    Encryption *encryption;     // the data
     EncryptionInventory *next; // the pointer
 };
 
@@ -84,33 +84,50 @@ int main(){
 
     // initialize Attack structures
     struct Attack attackStock[NUM_ATTACK] = {
-            {"Attack0", "Attack0_Description", 1},
-            {"Attack1", "Attack1_Description", 1},
-            {"Attack2", "Attack2_Description", 2},
-            {"Attack3", "Attack3_Description", 2},
+            {"Brute Force 1", "Simple brute force attack", 1},
+            {"Brute Force 2", "Simple brute force attack", 2},
+            {"Brute Force 3", "Simple brute force attack", 3},
+            {"Choosen Plaintext", "Attack1_Description", 1},
+            {"Choosen Ciphertext", "Attack2_Description", 2},
+            {"Frequency Analysis", "Attack3_Description", 2},
             {"Attack4", "Attack4_Description", 3}
     };
 
     // initialize 2d of attack effects (encrypt)
     double attackEffectiveness[NUM_ENCRYPTION][NUM_ATTACK] = {
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption0
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption1
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption2
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption3
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}  // Encryption7
+            {/* Attack0: */ 0.2, /* Attack1 */ 0.4, /* Attack2: */ 0.6, /* Attack3: */ 0.0, /* Attack4: */ 1.0}, // Encryption0
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.4, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption1
+            {/* Attack0: */ 0.0, /* Attack1 */ 0.1, /* Attack2: */ 0.3, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption2
+            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.1, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption3
+            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
+            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
+            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
+            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}  // Encryption7
     };
 
     // order attacks for game rounds
     /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
     Round rounds[NUM_ROUNDS] = {
             {1, 0},
-            {1, 2},
+            {1, -1},
+            {1, -1},
+            {1, -1},
             {2, 1},
-            {2, 3},
-            {3, 4},
+            {1, -1},
+            {2, -1},
+            {1, -1},
+            {1, -1},
+            {3, 2},
+            {1, -1},
+            {1, -1},
+            {1, -1},
+            {1, -1},
+            {1, -1},
+            {1, -1},
+            {1, -1},
+            {1, -1},
+            {1, -1},
+            {1, -1}
     };
 
     // declare
@@ -121,7 +138,7 @@ int main(){
 
     // Setup player
     player.equipmentInventory[0] = 1;                  /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
-    player.encryptionInventory = {encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
+    player.encryptionInventory = {&encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
     player.currentCredits = 1000;
 
     // output pregame information
@@ -129,7 +146,7 @@ int main(){
 
     while (currentRound < NUM_ROUNDS){
         printf("\n");
-        printf("|================================== Round %2d ==================================|\n", currentRound);
+        printf("|=============================== Round %2d / %2d ===============================|\n", currentRound, NUM_ROUNDS);
 
         // Output player status (if statements)
         // current credit
@@ -153,7 +170,7 @@ int main(){
         while (encryptionPtr != NULL){
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf(" - %s\n", encryptionPtr->encryption.name); // current encrypt
+            printf(" - %s\n", encryptionPtr->encryption->name); // current encrypt
             encryptionPtr = encryptionPtr->next; // pointer
         }
 
@@ -168,10 +185,10 @@ int main(){
 
             while (encryptionPtr != NULL){ // traverses encryptionInventory looking for highest level allowed for equipment
                 // ensure encryption method is available for this type of equipment
-                if (encryptionPtr->encryption.level <= equipmentStock[i].maxEncryptionLevel){
+                if (encryptionPtr->encryption->level <= equipmentStock[i].maxEncryptionLevel){
                     // check if encryption method effectiveness is greater than the previous max
-                    if (encryptionPtr->encryption.effectiveness > encryptionEffectiveness){
-                        encryptionEffectiveness = encryptionPtr->encryption.effectiveness;
+                    if (encryptionPtr->encryption->effectiveness > encryptionEffectiveness){
+                        encryptionEffectiveness = encryptionPtr->encryption->effectiveness;
                     }
                 }
 
@@ -190,11 +207,30 @@ int main(){
         // Present attack
         // print attack details and affects of attack
         // edit encrypt structure effectiveness
-        printf("|----------------------------- Warning New Attack! ----------------------------|\n");
-        printf("%s was developed!\n", attackStock[rounds[currentRound].attack].name);
-        printf("%s\n", attackStock[rounds[currentRound].attack].description);
-        printf("\n");
-        printf("Affects on Encryption Methods:\n");
+        if (rounds[currentRound].attack > -1){
+            Attack currentAttack = attackStock[rounds[currentRound].attack];
+            printf("|----------------------------- Warning New Attack! ----------------------------|\n");
+            printf("%s was developed!\n", currentAttack.name);
+            printf("%s\n", currentAttack.description);
+            printf("\n");
+            printf("Affects on Encryption Methods:\n");
+
+            //adjust encryption methods based on attack
+            for (int i=0; i<NUM_ENCRYPTION; i++){
+                double affect = attackEffectiveness[i][rounds[currentRound].attack];
+                if (affect > 0){
+                    encryptionStock[i].effectiveness -= affect;
+                    // keep in bounds
+                    if (encryptionStock[i].effectiveness < 0)
+                        encryptionStock[i].effectiveness = 0;
+                    printf(" - %s effectiveness has been reduced to %.2f!\n", encryptionStock[i].name, encryptionStock[i].effectiveness);
+                }
+            }
+        }
+        else{
+            printf("|------------------------------- No New Attack! -------------------------------|\n");
+        }
+
 
         printf("\n");
 
@@ -417,7 +453,7 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
         // create new encyrption method node
         struct EncryptionInventory *newEncryption;
         newEncryption = (struct EncryptionInventory *)malloc(sizeof(struct EncryptionInventory));
-        newEncryption->encryption = encryptionStock[encryptSelect];
+        newEncryption->encryption = &encryptionStock[encryptSelect];
         newEncryption->next = NULL;
         struct EncryptionInventory *temp = &(playerPtr->encryptionInventory);
 
