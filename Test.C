@@ -192,13 +192,15 @@ int main(){
         
         printf("|----------------------------- Equipment Selling ------------------------------|\n");
         printf("Equipment that you own:\n");
-        //print equipment that is owned 
+        for(int i = 0; i < NUM_EQUIPMENT; i++){
+            printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
+            printf("Amount of %s that is in your inventory: %d", equipmentStock[i].name, player.equipmentInventory[i]);
+        }
         printf("Your current credits are: %d\n", player.currentCredits); //current credit
         printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); //chose 11 becuase there are 10 options rn
         scanf("\n%d", &equipSellSelect);
 
-        while (equipSellSelect < NUM_EQUIPMENT) //while the user is selecting something to sell and not choseing to pass
-        {
+        while (equipSellSelect < NUM_EQUIPMENT){ //while the user is selecting something to sell and not choseing to pass
             printf("You have selected: %s", equipmentStock[0].name); //not sure if that should be equipmentStock or not
             printf("\n How many would you like to sell? ");
             scanf("\n%d", &equipSellAmount);
@@ -206,14 +208,26 @@ int main(){
             printf("This will sell for: %d", equipSellTransaction);
             printf("Are you sure you want to sell? y/N");
             scanf("\n%d", &equipSellAnswer);
-            if (equipSellAnswer == "y" || equipSellAnswer == "Y")
-            {
-                printf("Thank You!");
-                player.currentCredits = player.currentCredits + equipSellTransaction;
-                printf("Your current credits are: %d\n", player.currentCredits); //current credit
-                player.equipmentInventory[0]= player.equipmentInventory[0] - equipSellAmount; //removes equip from inventor prob wrong
+            if (equipSellAnswer == "y" || equipSellAnswer == "Y"){ 
+                if (player.equipmentInventory[0] > 0){ //checks that the user has the item in thier inventory
+                    printf("Thank You!");
+                    player.currentCredits = player.currentCredits + equipSellTransaction;
+                    printf("Your current credits are: %d\n", player.currentCredits); //current credit
+                    player.equipmentInventory[0]= player.equipmentInventory[0] - equipSellAmount; 
+                }
+                if (player.equipmentInventory == 0){ //checks that the user has the item in thier inventory
+                    printf("You do not have any of this equipment in your inventory");
+                    printf("The transcation was canceled");
+                }
+            }
+            if (equipSellAnswer == "n" || equipSellAnswer == "N"){
+                printf("The transcation was canceled");
             }
             //print equipment that is owned
+            for(int i = 0; i < NUM_EQUIPMENT; i++){
+                printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
+                printf("Amount of %s that is in your inventory: %d", equipmentStock[i].name, player.equipmentInventory[i]);
+            }
             printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
             scanf("\n%d", &equipSellSelect);
         }
