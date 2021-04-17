@@ -129,7 +129,7 @@ int main(){
 
     while (currentRound < NUM_ROUNDS){
         printf("\n");
-        printf("|================================== Round %2d ==================================|\n", currentRound);
+        printf("|================================== Round %2d ==================================|\n", currentRound + 1);
 
         // Output player status (if statements)
         // current credit
@@ -142,7 +142,7 @@ int main(){
             // details about the equipment type itself is stored in equipmentStock
             // amount of this equipment type that the player has is stored in equipmentInventory
             if (player.equipmentInventory[i] > 0){
-                printf("%3d %s(s)\n", player.equipmentInventory[i], equipmentStock[i].name);
+                printf(" - %3d %s(s)\n", player.equipmentInventory[i], equipmentStock[i].name);
             }
         }
 
@@ -321,14 +321,14 @@ void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NU
     int amountSelect;
     int transactionTotal;
     char yesNo;
-    int i;
 
     printf("\n");
     printf("|------------------------------ Equipment  Store ------------------------------|\n");
+printf("You currently have %i credits\n", playerPtr->currentCredits);
 
     printf(" # | Equipment Name       | Cost  | Message Amount\n");
     printf("---|----------------------|-------|---------------\n");
-    for(i=0; i<NUM_EQUIPMENT; i++){
+    for(int i=0; i<NUM_EQUIPMENT; i++){
         printf(" %d | %20s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount);
     }
 
@@ -381,6 +381,7 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
 
     printf("\n");
     printf("|------------------------------ Encryption Store ------------------------------|\n");
+printf("You currently have %i credits\n", playerPtr->currentCredits);
 
     printf(" # | Encryption Name      | Cost  | Current Effectiveness\n");
     printf("---|----------------------|-------|----------------------\n");
