@@ -5,8 +5,8 @@
 // Define literals
 #define NAME_LENGTH 20
 #define DESCRIPTION_LENGTH 200
-#define NUM_EQUIPMENT 10
-#define NUM_ENCRYPTION 10
+#define NUM_EQUIPMENT 6
+#define NUM_ENCRYPTION 8
 #define NUM_ATTACK 5
 #define NUM_ROUNDS 5
 
@@ -47,7 +47,7 @@ struct Player{
 
 struct Round{
     int attackTier;
-    Attack attack;
+    int attack;
 };
 
 // Function prototypes
@@ -62,30 +62,24 @@ int main(){
     */
     // initialize equipment structures
     struct Equipment equipmentStock[NUM_EQUIPMENT] = {
-            {"Equipment0", "Equipment0_Description", 10, 100, 10},
-            {"Equipment1", "Equipment1_Description", 10, 100, 10},
-            {"Equipment2", "Equipment2_Description", 10, 100, 10},
-            {"Equipment3", "Equipment3_Description", 10, 100, 10},
-            {"Equipment4", "Equipment4_Description", 10, 100, 10},
-            {"Equipment5", "Equipment5_Description", 10, 100, 10},
-            {"Equipment6", "Equipment6_Description", 10, 100, 10},
-            {"Equipment7", "Equipment7_Description", 10, 100, 10},
-            {"Equipment8", "Equipment8_Description", 10, 100, 10},
-            {"Equipment9", "Equipment9_Description", 10, 100, 10}
+            {"Mechanical Computer",  "Equipment0_Description", 100,   10,    1},
+            {"Vacuum Tube Comp", "Equipment1_Description", 500,   100,   1},
+            {"Mainframe",            "Equipment2_Description", 1000,  500,   3},
+            {"Personal Computer",    "Equipment3_Description", 1500,  500,   5},
+            {"Server",               "Equipment4_Description", 4000,  1000,  5},
+            {"Super Computer",       "Equipment5_Description", 10000, 10000, 5}
     };
 
     // initialize encrypt structures
     struct Encryption encryptionStock[NUM_ENCRYPTION] = {
-            {"Encryption0", "Encryption0_Description", 10, 0.75, 1},
-            {"Encryption1", "Encryption1_Description", 10, 0.75, 2},
-            {"Encryption2", "Encryption2_Description", 10, 0.75, 3},
-            {"Encryption3", "Encryption3_Description", 10, 0.75, 4},
-            {"Encryption4", "Encryption4_Description", 10, 0.75, 5},
-            {"Encryption5", "Encryption5_Description", 10, 0.75, 6},
-            {"Encryption6", "Encryption6_Description", 10, 0.75, 7},
-            {"Encryption7", "Encryption7_Description", 10, 0.75, 8},
-            {"Encryption8", "Encryption8_Description", 10, 0.75, 9},
-            {"Encryption9", "Encryption9_Description", 10, 0.75, 10}
+            {"Ceasar",      "Encryption0_Description", 10,    1.0, 1},
+            {"Vigenere",    "Encryption1_Description", 100,   1.0, 1},
+            {"ChaCha",      "Encryption2_Description", 1000,  1.0, 2},
+            {"DES",         "Encryption3_Description", 2000,  1.0, 2},
+            {"3DES",        "Encryption4_Description", 6000,  1.0, 3},
+            {"Encrypt>MAC", "Encryption5_Description", 12000, 1.0, 3},
+            {"AES",         "Encryption6_Description", 15000, 1.0, 4},
+            {"RSA",         "Encryption7_Description", 20000, 1.0, 5},
     };
 
     // initialize Attack structures
@@ -106,19 +100,17 @@ int main(){
             {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
             {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
             {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption7
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption8
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}  // Encryption9
+            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.8, /* Attack3: */ 1.0, /* Attack4: */ 1.0}  // Encryption7
     };
 
     // order attacks for game rounds
     /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
     Round rounds[NUM_ROUNDS] = {
-            {1, attackStock[0]},
-            {1, attackStock[0]},
-            {2, attackStock[0]},
-            {2, attackStock[0]},
-            {3, attackStock[0]},
+            {1, 0},
+            {1, 2},
+            {2, 1},
+            {2, 3},
+            {3, 4},
     };
 
     // declare
@@ -130,40 +122,45 @@ int main(){
     // Setup player
     player.equipmentInventory[0] = 1;                  /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
     player.encryptionInventory = {encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
-    player.currentCredits = 30;
+    player.currentCredits = 1000;
 
     // output pregame information
     displayBriefingMessage(&player);
 
     while (currentRound < NUM_ROUNDS){
-        printf("|================================== Round %2d ==================================|\n", currentRound);
+        printf("\n");
+        printf("|================================== Round %2d ==================================|\n", currentRound + 1);
 
         // Output player status (if statements)
         // current credit
-        printf("Credits: %d\n", player.currentCredits); //current credit
+        printf("|----------------------------- Current Inventory ------------------------------|\n");
+        printf("Credits: %d\n", player.currentCredits);
+        printf("\n");
+        printf("Equipment Inventory:\n");
 
         for (i=0; i<NUM_EQUIPMENT; i++){
             // details about the equipment type itself is stored in equipmentStock
             // amount of this equipment type that the player has is stored in equipmentInventory
-            printf("%s: %d\n", equipmentStock[i].name, player.equipmentInventory[i]);
+            if (player.equipmentInventory[i] > 0){
+                printf(" - %3d %s(s)\n", player.equipmentInventory[i], equipmentStock[i].name);
+            }
         }
 
-        // pulls from info from index amount table referencing index struct table
-
+        printf("\n");
+        printf("Encryption Methods Available:\n");
         // setup encryption 'current' pointer
         encryptionPtr = &player.encryptionInventory;
-
         while (encryptionPtr != NULL){
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf("%s\n", encryptionPtr->encryption.name); // current encrypt
+            printf(" - %s\n", encryptionPtr->encryption.name); // current encrypt
             encryptionPtr = encryptionPtr->next; // pointer
         }
 
         // Receive credits
+        printf("\n");
+        printf("|------------------------------- Recieve Credits ------------------------------|\n");
         int newCredits = 0;
-	      printf("Original credits: %d\n", player.currentCredits); // prints out the current credits the player has
-
         for (i=0; i<NUM_EQUIPMENT; i++){
             encryptionPtr = &player.encryptionInventory; // resets 'current' pointer
             int currentLevel = 0;
@@ -182,23 +179,30 @@ int main(){
             }
             newCredits += equipmentStock[i].messageAmount * player.equipmentInventory[i] * encryptionEffectiveness; // sum message amount of equipment(s)
         }
-
         player.currentCredits += newCredits; // adding credits to currentCredits
 
         // tell user how credits received and what encrypt method was used
 	      printf("You received %d credits!\n", newCredits); // telling the user how many credits they were awarded
 
         printf("Credits: %d\n", player.currentCredits); // current credit
+        printf("\n");
 
         // Present attack
         // print attack details and affects of attack
         // edit encrypt structure effectiveness
+        printf("|----------------------------- Warning New Attack! ----------------------------|\n");
+        printf("%s was developed!\n", attackStock[rounds[currentRound].attack].name);
+        printf("%s\n", attackStock[rounds[currentRound].attack].description);
+        printf("\n");
+        printf("Affects on Encryption Methods:\n");
+
+        printf("\n");
 
         // Spend credits interactive menu
         printf("|-------------------------------- Credit Store --------------------------------|\n");
         printf("Here you can buy equipment and upgrade encryption as well as sell the equipment\n");
         printf("that you already own.\n");
-        printf("Your current credits are: %d\n", player.currentCredits); //current credit
+        printf("\n");
 
         // display available equipment and encrypt options
         // as well how many credits and what the current inventory is
@@ -369,12 +373,18 @@ void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NU
     int transactionTotal;
     char yesNo;
 
+    printf("\n");
     printf("|------------------------------ Equipment  Store ------------------------------|\n");
-    for(int i = 0; i < NUM_EQUIPMENT; i++){
-        printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
+printf("You currently have %i credits\n", playerPtr->currentCredits);
+
+    printf(" # | Equipment Name       | Cost  | Message Amount\n");
+    printf("---|----------------------|-------|---------------\n");
+    for(int i=0; i<NUM_EQUIPMENT; i++){
+        printf(" %d | %20s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount);
     }
 
-    printf("Please Select the number of the equipment you would like to buy: "); // 1-10 input
+    printf("\n");
+    printf("Please select the number of the equipment you would like to buy: "); // 1-10 input
     scanf("%d", &equipmentSelect);
     // adjust equipment selection by one, since user input starts at one and not zero
     equipmentSelect -= 1;
@@ -389,18 +399,21 @@ void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NU
         printf("This will cost: %d credits\n", transactionTotal);
         if (playerPtr->currentCredits < transactionTotal){ // credit check
             printf("Insufficient funds\n");
+            printf("\n");
             return; // lazy return lol
         }
         printf("Are you sure? y/N ");
         scanf(" %c", &yesNo);
         if (yesNo == 'Y' || yesNo == 'y'){
             printf("Thank You!\n");
+            printf("\n");
             playerPtr->currentCredits = playerPtr->currentCredits - transactionTotal;
             playerPtr->equipmentInventory[equipmentSelect] = playerPtr->equipmentInventory[equipmentSelect] + amountSelect;
         }
     }
     else{
         printf("Selection out of range\n");
+        printf("\n");
         return;
     }
 }
@@ -414,43 +427,53 @@ void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NU
 ******************************************************************************/
 void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock[NUM_ENCRYPTION]){
     int encryptSelect;
-    int amountSelect;
     int transactionTotal;
     char yesNo;
 
+    printf("\n");
     printf("|------------------------------ Encryption Store ------------------------------|\n");
+printf("You currently have %i credits\n", playerPtr->currentCredits);
 
+    printf(" # | Encryption Name      | Cost  | Current Effectiveness\n");
+    printf("---|----------------------|-------|----------------------\n");
     for (int i=0; i<NUM_ENCRYPTION; i++){
-        printf("%s %s %d %f\n", encryptionStock[i].name, encryptionStock[i].description, encryptionStock[i].cost, encryptionStock[i].effectiveness);
+        printf(" %d | %20s | %5d | %.2f\n", i + 1, encryptionStock[i].name, encryptionStock[i].cost, encryptionStock[i].effectiveness);
     }
-    printf("Please Select the number of the encryption you would like to buy: ");
+
+    printf("\n");
+    printf("Please select the number of the encryption you would like to buy: ");
     scanf("%d", &encryptSelect);
     // adjust encryption selection by one, since user input starts at one and not zero
     encryptSelect -= 1;
 
-    if (encryptSelect >= 0 && encryptSelect < (NUM_EQUIPMENT)){
+    if (encryptSelect >= 0 && encryptSelect < (NUM_ENCRYPTION)){
         printf("You have selected: %s\n", encryptionStock[encryptSelect].name);
-        printf("How many would you like to buy? ");
-        scanf("%d", &amountSelect);
-        int transactionTotal = encryptionStock[encryptSelect].cost * amountSelect;
+
+        int transactionTotal = encryptionStock[encryptSelect].cost;
         printf("This will cost: %d credits\n", transactionTotal);
+
         if (playerPtr->currentCredits < transactionTotal){
             printf("Insufficient funds\n");
+            printf("\n");
             return;
         }
+
         printf("Are you sure? y/N ");
         scanf(" %c", &yesNo);
         if (yesNo == 'Y' || yesNo == 'y'){
             printf("Thank You!\n");
+            printf("\n");
             playerPtr->currentCredits = playerPtr->currentCredits - transactionTotal;
         }
 
+        // create new encyrption method node
         struct EncryptionInventory *newEncryption;
         newEncryption = (struct EncryptionInventory *)malloc(sizeof(struct EncryptionInventory));
         newEncryption->encryption = encryptionStock[encryptSelect];
         newEncryption->next = NULL;
         struct EncryptionInventory *temp = &(playerPtr->encryptionInventory);
 
+        // add to end of list
         while (temp->next != NULL){
             temp = temp->next;
         }
@@ -458,6 +481,7 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
     }
     else{
         printf("Selection out of range\n");
+        printf("\n");
         return;
     }
 }
