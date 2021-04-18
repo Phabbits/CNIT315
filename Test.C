@@ -178,7 +178,7 @@ int main(){
 
     while (currentRound < NUM_ROUNDS){
         printf("\n");
-        printf("|=============================== Round %2d / %2d ===============================|\n", currentRound, NUM_ROUNDS);
+        printf("|=============================== Round %2d / %2d ================================|\n", currentRound, NUM_ROUNDS);
 
         // Output player status (if statements)
         // current credit
@@ -265,7 +265,7 @@ int main(){
                     // keep in bounds
                     if (encryptionStock[i].effectiveness < 0)
                         encryptionStock[i].effectiveness = 0;
-                    printf(" - %s effectiveness has been reduced to %.0f%!\n", encryptionStock[i].name, encryptionStock[i].effectiveness * 100);
+                    printf(" - %s effectiveness has been reduced to %.0f%%!\n", encryptionStock[i].name, encryptionStock[i].effectiveness * 100);
                 }
             }
         }
@@ -274,9 +274,9 @@ int main(){
         }
 
         //pause
+        printf("\n");
         printf("%80s", "[Press Enter to Continue to The Store]");
         scanf("%c", &pause);
-        printf("\n");
 
         printf("\n");
 
@@ -321,8 +321,8 @@ int main(){
         // Selling equipment
         // decrease amount in index amount if things are sold
         // increase credit if things are sold
-        // So this is a lot of pseudo code or not finished but idk how to do it fully but it a good framework 
-        // assumes that you can sell the equipment for the same price that is bought 
+        // So this is a lot of pseudo code or not finished but idk how to do it fully but it a good framework
+        // assumes that you can sell the equipment for the same price that is bought
         int equipSellSelect;
         int equipSellAmount;
         int equipSellTransaction;
@@ -334,7 +334,7 @@ int main(){
         printf(" # | Equipment Name                       | Cost  | Message Amount | Inventory |\n");
         printf("---|--------------------------------------|-------|----------------|-----------|\n");
         for(int i=0; i<NUM_EQUIPMENT; i++){
-            printf(" %d | %38s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, player.equipmentInventory[i]);
+            printf(" %d | %36s | %5d | %14d | %9d |\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, player.equipmentInventory[i]);
         }
 
         printf("Your current credits are: %d\n", player.currentCredits); // current credit
@@ -343,18 +343,18 @@ int main(){
 
         while (equipSellSelect < NUM_EQUIPMENT){ // while the user is selecting something to sell and not choseing to pass
             printf("You have selected: %s\n", equipmentStock[0].name); // not sure if that should be equipmentStock or not
-            printf("How many would you like to sell?\n");
+            printf("How many would you like to sell? ");
             scanf("%d", &equipSellAmount);
             equipSellTransaction = equipmentStock[0].cost * equipSellAmount; // not sure if that should be equipmentStock or not
             printf("This will sell for: %d\n", equipSellTransaction);
             printf("Are you sure you want to sell? y/N ");
             scanf(" %c", &equipSellAnswer);
-            if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){ 
+            if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){
                 if (player.equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
                     printf("Thank You!\n");
                     player.currentCredits = player.currentCredits + equipSellTransaction;
                     printf("Your current credits are: %d\n", player.currentCredits); // current credit
-                    player.equipmentInventory[0] = player.equipmentInventory[0] - equipSellAmount; 
+                    player.equipmentInventory[0] = player.equipmentInventory[0] - equipSellAmount;
                 }
                 if (player.equipmentInventory == 0){ // checks that the user has the item in their inventory
                     printf("You do not have any of this equipment in your inventory\n");
@@ -369,14 +369,14 @@ int main(){
             printf(" # | Equipment Name                       | Cost  | Message Amount | Inventory |\n");
             printf("---|--------------------------------------|-------|----------------|-----------|\n");
             for(int i=0; i<NUM_EQUIPMENT; i++){
-                printf(" %d | %38s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, player.equipmentInventory[i]);
+                printf(" %d | %36s | %5d | %14d | %9d |\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, player.equipmentInventory[i]);
             }
             printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
             scanf("%d", &equipSellSelect);
         }
 
         // round is complete
-        printf("|======================= This is the end of round %2d =========================|\n", currentRound + 1);
+        printf("|======================= This is the end of round %2d ==========================|\n", currentRound + 1);
 
         // round is complete
         currentRound++;
@@ -472,7 +472,7 @@ void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NU
     printf(" # | Equipment Name                         | Cost  | Message Amount\n");
     printf("---|----------------------------------------|-------|---------------\n");
     for(int i=0; i<NUM_EQUIPMENT; i++){
-        printf(" %d | %40s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount);
+        printf(" %d | %38s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount);
     }
 
     printf("\n");
@@ -532,7 +532,7 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
     printf(" # | Encryption Name                        | Cost  | Current Effectiveness\n");
     printf("---|----------------------------------------|-------|----------------------\n");
     for (int i=0; i<NUM_ENCRYPTION; i++){
-        printf(" %d | %40s | %5d | %.2f\n", i + 1, encryptionStock[i].name, encryptionStock[i].cost, encryptionStock[i].effectiveness);
+        printf(" %d | %38s | %5d | %.2f\n", i + 1, encryptionStock[i].name, encryptionStock[i].cost, encryptionStock[i].effectiveness);
     }
 
     printf("\n");
@@ -543,7 +543,7 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
 
     if (encryptSelect >= 0 && encryptSelect < (NUM_ENCRYPTION)){
         printf("You have selected: %s\n", encryptionStock[encryptSelect].name);
-        printf("%s\n", encryptionStock[encryptSelect].name);
+        printf("%s\n", encryptionStock[encryptSelect].description);
 
         int transactionTotal = encryptionStock[encryptSelect].cost;
         printf("This will cost: %d credits\n", transactionTotal);
