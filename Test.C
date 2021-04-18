@@ -107,6 +107,7 @@ int main(){
 
     // order attacks for game rounds
     /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
+    // rounds with -1 do not upgrade attack
     Round rounds[NUM_ROUNDS] = {
             {1, 0},
             {1, -1},
@@ -176,7 +177,7 @@ int main(){
 
         // Receive credits
         printf("\n");
-        printf("|------------------------------- Recieve Credits ------------------------------|\n");
+        printf("|------------------------------- Receive Credits ------------------------------|\n");
         int newCredits = 0;
         for (i=0; i<NUM_EQUIPMENT; i++){
             encryptionPtr = &player.encryptionInventory; // resets 'current' pointer
@@ -307,13 +308,13 @@ int main(){
                     printf("Your current credits are: %d\n", player.currentCredits); // current credit
                     player.equipmentInventory[0] = player.equipmentInventory[0] - equipSellAmount; 
                 }
-                if (player.equipmentInventory == 0){ // checks that the user has the item in thier inventory
+                if (player.equipmentInventory == 0){ // checks that the user has the item in their inventory
                     printf("You do not have any of this equipment in your inventory\n");
-                    printf("The transcation was canceled\n");
+                    printf("The transaction was canceled\n");
                 }
             }
             if (equipSellAnswer == 'n' || equipSellAnswer == 'N'){
-                printf("The transcation was canceled\n");
+                printf("The transaction was canceled\n");
             }
             // print equipment that is owned
             for(int i=0; i<NUM_EQUIPMENT; i++){
@@ -379,7 +380,7 @@ void displayBriefingMessage(struct Player * playerPtr){
     scanf("%c", &pause);
     printf("\n");
     printf("In response, you will enter a store stage where you can buy and sell equipment,\n");
-    printf("and upgrade to a newer encryption method. You will recieve CREDITS for the \n");
+    printf("and upgrade to a newer encryption method. You will receive CREDITS for the \n");
     printf("amount of confidential messages sent each round, which you can spend in the\n");
     printf("store.\n");
 
