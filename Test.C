@@ -341,22 +341,21 @@ int main(){
         printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); // chose 11 because there are 10 options rn
         scanf("%d", &equipSellSelect);
 
-        while (equipSellSelect < NUM_EQUIPMENT){ // while the user is selecting something to sell and not choseing to pass
-            printf("You have selected: %s\n", equipmentStock[0].name); // not sure if that should be equipmentStock or not
+        while (equipSellSelect < NUM_EQUIPMENT && equipSellSelect > 0){ // while the user is selecting something to sell and not choosing to pass
+            printf("You have selected: %s\n", equipmentStock[equipSellSelect - 1].name); // not sure if that should be equipmentStock or not
             printf("How many would you like to sell?\n");
             scanf("%d", &equipSellAmount);
-            equipSellTransaction = equipmentStock[0].cost * equipSellAmount; // not sure if that should be equipmentStock or not
+            equipSellTransaction = equipmentStock[equipSellSelect - 1].cost * equipSellAmount; // not sure if that should be equipmentStock or not
             printf("This will sell for: %d\n", equipSellTransaction);
             printf("Are you sure you want to sell? y/N ");
             scanf(" %c", &equipSellAnswer);
             if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){ 
-                if (player.equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
+                if (player.equipmentInventory[equipSellSelect - 1] > 0){ // checks that the user has the item in their inventory
                     printf("Thank You!\n");
                     player.currentCredits = player.currentCredits + equipSellTransaction;
                     printf("Your current credits are: %d\n", player.currentCredits); // current credit
-                    player.equipmentInventory[0] = player.equipmentInventory[0] - equipSellAmount; 
-                }
-                if (player.equipmentInventory == 0){ // checks that the user has the item in their inventory
+                    player.equipmentInventory[equipSellSelect - 1] = player.equipmentInventory[equipSellSelect - 1] - equipSellAmount;
+                } else if (player.equipmentInventory[equipSellSelect - 1] == 0){ // checks that the user has the item in their inventory
                     printf("You do not have any of this equipment in your inventory\n");
                     printf("The transaction was canceled\n");
                 }
