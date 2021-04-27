@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 // Define literals
-#define NAME_LENGTH 20
-#define DESCRIPTION_LENGTH 200
+#define NAME_LENGTH 35
+#define DESCRIPTION_LENGTH 300
 #define NUM_EQUIPMENT 6
 #define NUM_ENCRYPTION 8
 #define NUM_ATTACK 7
@@ -62,35 +62,65 @@ int main(){
     */
     // initialize equipment structures
     struct Equipment equipmentStock[NUM_EQUIPMENT] = {
-            {"Mechanical Computer",  "Equipment0_Description", 100,   10,    1},
-            {"Vacuum Tube Comp", "Equipment1_Description", 500,   100,   1},
-            {"Mainframe",            "Equipment2_Description", 1000,  500,   3},
-            {"Personal Computer",    "Equipment3_Description", 1500,  500,   5},
-            {"Server",               "Equipment4_Description", 4000,  1000,  5},
-            {"Super Computer",       "Equipment5_Description", 10000, 10000, 5}
+            {"Mechanical Computer",  "Computations performed by manually operated levers and gears.", 100,   10,    1},
+            {"Vacuum Tube Computer", "Vacuum tubes used to send pulses, large amount of electricity required.", 500,   100,   1},
+            {"Mainframe",            "Large machines used for bulk computation or centralized data processing.", 1000,  500,   3},
+            {"Personal Computer",    "Designed for one user to use at a time. Come in Desktop & Laptop forms.", 1500,  500,   5},
+            {"Server",               "Designed for multiple users and multi-threaded computations to enhance performance.", 4000,  1000,  5},
+            {"Super Computer",       "Extremely high performance, thousands of processor cores for computation.", 10000, 10000, 5}
     };
 
     // initialize encrypt structures
     struct Encryption encryptionStock[NUM_ENCRYPTION] = {
-            {"Ceasar",      "Encryption0_Description", 10,    1.0, 1},
-            {"Vigenere",    "Encryption1_Description", 100,   1.0, 1},
-            {"ChaCha",      "Encryption2_Description", 1000,  1.0, 2},
-            {"DES",         "Encryption3_Description", 2000,  1.0, 2},
-            {"3DES",        "Encryption4_Description", 6000,  1.0, 3},
-            {"Encrypt>MAC", "Encryption5_Description", 12000, 1.0, 3},
-            {"AES",         "Encryption6_Description", 15000, 1.0, 4},
-            {"RSA",         "Encryption7_Description", 20000, 1.0, 5},
+            {"Caesar Cipher",
+                "Characters with this encryption are shifted by a certain amount (0-26). The\nadvantage is that the ciphertext is not easily decipherable to the human eye,\nbut there are only 26 possible combinations.",
+                10,    1.0, 1},
+            {"Vigenere Cipher",
+                "Similar to Caesar Cipher, but keyspace is enlarged. Instead of shifting the\ncharacters, a key is used to match plaintext and ciphertext. Key can be\nrepeated or as long as the plaintext.",
+                100,   1.0, 1},
+            {"ChaCha",
+                "Stream Cipher with Psuedo-Random Generator. Initialization vector and key\nused to create randomness between sessions. Same key reveals difference\nbetween messages then frequency analysis can determine plaintext.",
+                1000,  1.0, 2},
+            {"Data Encryption Standard (DES)",
+                "Block cipher with Psuedo-Random Function. Widely adopted in government\nat first, but only uses 54-bit key and 64-bit block. Was federal standard in\n1976.",
+                2000,  1.0, 2},
+            {"3DES",
+                "An improvement on DES without the need for upgraded equipment. 3DES uses\na bundle of 3 keys to encrypt, decrypt, then encrypt messages to increase\nthe strength of the algorithm.",
+                6000,  1.0, 3},
+            {"Encrypt>MAC",
+                "Encrypts a message and then generates a MAC tag based on the resulting\nciphertext. Prevents deterministic properties and allows user to verify sender\n on an encrypted message.",
+                12000, 1.0, 3},
+            {"AES",
+                "Block cipher with Pseudo-Random Permutation. Fixed 128-bit block, but key\n size may vary (128, 192, 256 bits). New federal standard. No integrity\nprotection, but only side-channel attacks likely to break encryption.",
+                15000, 1.0, 4},
+            {"RSA",
+                "Public key cryptography (no preshared key necessary) based on integer\nfactorization. RSA-OAEP provides CCA security by including random numbers.\nUse RSA-OAEP because otherwise is not CPA secure.",
+                20000, 1.0, 5},
     };
 
     // initialize Attack structures
     struct Attack attackStock[NUM_ATTACK] = {
-            {"Brute Force 1", "Simple brute force attack", 1},
-            {"Brute Force 2", "Simple brute force attack", 2},
-            {"Brute Force 3", "Simple brute force attack", 3},
-            {"Choosen Plaintext", "Attack1_Description", 1},
-            {"Choosen Ciphertext", "Attack2_Description", 2},
-            {"Frequency Analysis", "Attack3_Description", 2},
-            {"Attack4", "Attack4_Description", 3}
+            {"Brute Force 1",
+                "An attacker has started to brute-force your system with limited resources. The\nattacker doesn't have any more advantage other than a random guess.\nIt's similar to cracking a bike lock. Wrong password? Try Again.",
+                1},
+            {"Brute Force 2",
+                "An attacker has started to brute-force your system with some powerful resources.\nThe attacker still doesn't have any more advantage other than a random\nguess, but weak passwords may be pretty vulnerable.",
+                2},
+            {"Brute Force 3",
+                "An attacker has started to brute-force your system with extremely powerful\nresources. The attacker still doesn't have more advantage than a random guess,\nbut they can guess many combinations very quickly.",
+                3},
+            {"Chosen Plaintext",
+                "An attacker has found a way to actively set the plaintext used in your system\nand can view the resulting output ciphertext. This could be a problem for\ndeterministic encryption methods (where the same input always leads to the\nsame output).",
+                1},
+            {"Chosen Ciphertext",
+                "An attacker has found a way to modify your ciphertext before it reaches the\ntarget system. This could be a problem for integrity of your messages. For\nexample, do you want to withdraw 10 dollars from your bank account or\n10 million dollars?",
+                2},
+            {"Frequency Analysis",
+                "In the English language, some letters appear more than others (for example,\nthe letter e). In deterministic encryptions, patterns may arise which lead to\nthe identification of certain letters in the ciphertext. This helps\ncrack encryptions with larger keyspaces and can be fast than brute-force.",
+                2},
+            {"Side Channel Attack",
+                "Attackers can use anything from the seemingly unnoticeable pulsing of lights\nto the heat emitted from your computer to help get clues on what you message\nwas before encryption. Physical access would make these attacks\neasy for your attacker. They could literally steal your hard drive.",
+                3}
     };
 
     // initialize 2d of attack effects (encrypt)
@@ -136,10 +166,11 @@ int main(){
     int currentRound = 0;
     int i;
     struct EncryptionInventory *encryptionPtr;
+    char pause;
 
     // Setup player
-    player.equipmentInventory[0] = 1;                  /* TODO: RANDOMLY POPULATE EQUIPMENT (Do we need to tier equipment?) */
-    player.encryptionInventory = {&encryptionStock[0]}; /* TODO: RANDOMLY POPULATE ENCRYPTION (Do we need to tier encryption?) */
+    player.equipmentInventory[0] = 1;
+    player.encryptionInventory = {&encryptionStock[0]};
     player.currentCredits = 1000;
 
     // output pregame information
@@ -171,9 +202,14 @@ int main(){
         while (encryptionPtr != NULL){
             // details about the encryption type itself is stored in encryptionStock
             // amount of this encryption type that the player has is stored in encryptionInventory
-            printf(" - %s\n", encryptionPtr->encryption->name); // current encrypt
+            printf(" -    %s\n", encryptionPtr->encryption->name); // current encrypt
             encryptionPtr = encryptionPtr->next; // pointer
         }
+
+        //pause
+        printf("%80s", "[Press Enter to Send Encrypted Messages]");
+        scanf("%c", &pause);
+        printf("\n");
 
         // Receive credits
         printf("\n");
@@ -200,9 +236,14 @@ int main(){
         player.currentCredits += newCredits; // adding credits to currentCredits
 
         // tell user how credits received and what encrypt method was used
-	      printf("You received %d credits!\n", newCredits); // telling the user how many credits they were awarded
+	      printf("You received %d credits for the amount of messages that were successfully sent!\n", newCredits); // telling the user how many credits they were awarded
 
-        printf("Credits: %d\n", player.currentCredits); // current credit
+        printf("Your total credits: %d\n", player.currentCredits); // current credit
+        printf("\n");
+
+        //pause
+        printf("%80s", "[Press Enter to Prepare for The Next Round]");
+        scanf("%c", &pause);
         printf("\n");
 
         // Present attack
@@ -224,7 +265,7 @@ int main(){
                     // keep in bounds
                     if (encryptionStock[i].effectiveness < 0)
                         encryptionStock[i].effectiveness = 0;
-                    printf(" - %s effectiveness has been reduced to %.2f!\n", encryptionStock[i].name, encryptionStock[i].effectiveness);
+                    printf(" - %s effectiveness has been reduced to %.0f%%!\n", encryptionStock[i].name, encryptionStock[i].effectiveness * 100);
                 }
             }
         }
@@ -232,6 +273,10 @@ int main(){
             printf("|------------------------------- No New Attack! -------------------------------|\n");
         }
 
+        //pause
+        printf("%80s", "[Press Enter to Continue to The Store]");
+        scanf("%c", &pause);
+        printf("\n");
 
         printf("\n");
 
@@ -282,15 +327,18 @@ int main(){
         int equipSellAmount;
         int equipSellTransaction;
         char equipSellAnswer;
-        
+
+        printf("\n");
         printf("|----------------------------- Equipment Selling ------------------------------|\n");
         printf("Equipment that you own:\n");
+        printf(" # | Equipment Name                       | Cost  | Message Amount | Inventory |\n");
+        printf("---|--------------------------------------|-------|----------------|-----------|\n");
         for(int i=0; i<NUM_EQUIPMENT; i++){
-            printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
-            printf("Amount of %s that is in your inventory: %d\n", equipmentStock[i].name, player.equipmentInventory[i]);
+            printf(" %d | %36s | %5d | %14d | %9d |\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, player.equipmentInventory[i]);
         }
+
         printf("Your current credits are: %d\n", player.currentCredits); // current credit
-        printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); // chose 11 becuase there are 10 options rn
+        printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1); // chose 11 because there are 10 options rn
         scanf("%d", &equipSellSelect);
 
         while (equipSellSelect < NUM_EQUIPMENT){ // while the user is selecting something to sell and not choseing to pass
@@ -317,9 +365,11 @@ int main(){
                 printf("The transaction was canceled\n");
             }
             // print equipment that is owned
+            printf("Equipment that you own:\n");
+            printf(" # | Equipment Name                       | Cost  | Message Amount | Inventory |\n");
+            printf("---|--------------------------------------|-------|----------------|-----------|\n");
             for(int i=0; i<NUM_EQUIPMENT; i++){
-                printf("%s %s %d %d\n", equipmentStock[i].name, equipmentStock[i].description, equipmentStock[i].cost, equipmentStock[i].messageAmount);
-                printf("Amount of %s that is in your inventory: %d", equipmentStock[i].name, player.equipmentInventory[i]);
+                printf(" %d | %36s | %5d | %14d | %9d |\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, player.equipmentInventory[i]);
             }
             printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
             scanf("%d", &equipSellSelect);
@@ -330,6 +380,11 @@ int main(){
 
         // round is complete
         currentRound++;
+
+        //pause
+        printf("%80s", "[Press Enter to Begin Next Round]");
+        scanf("%c", &pause);
+        printf("\n");
 
         // Save player score to leaderboard (prototype 2)
     }
@@ -414,24 +469,27 @@ void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NU
     printf("|------------------------------ Equipment  Store ------------------------------|\n");
     printf("You currently have %i credits\n", playerPtr->currentCredits);
 
-    printf(" # | Equipment Name       | Cost  | Message Amount\n");
-    printf("---|----------------------|-------|---------------\n");
+    printf(" # | Equipment Name                         | Cost  | Message Amount\n");
+    printf("---|----------------------------------------|-------|---------------\n");
     for(int i=0; i<NUM_EQUIPMENT; i++){
-        printf(" %d | %20s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount);
+        printf(" %d | %38s | %5d | %5d\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount);
     }
 
     printf("\n");
-    printf("Please select the number of the equipment you would like to buy: "); // 1-10 input
+    printf("Please select the number of the equipment to view more details: "); // 1-10 input
     scanf("%d", &equipmentSelect);
     // adjust equipment selection by one, since user input starts at one and not zero
     equipmentSelect -= 1;
 
     if (equipmentSelect >= 0 && equipmentSelect < (NUM_EQUIPMENT)){ // if in range
         printf("You have selected: %s\n", equipmentStock[equipmentSelect].name);
+        printf("%s\n", equipmentStock[equipmentSelect].description);
         printf("How many would you like to buy? ");
         scanf("%d", &amountSelect);
 
-
+        if (amountSelect <= 0) {
+            return;
+        }
         int transactionTotal = equipmentStock[equipmentSelect].cost * amountSelect;
         printf("This will cost: %d credits\n", transactionTotal);
         if (playerPtr->currentCredits < transactionTotal){ // credit check
@@ -471,20 +529,21 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
     printf("|------------------------------ Encryption Store ------------------------------|\n");
     printf("You currently have %i credits\n", playerPtr->currentCredits);
 
-    printf(" # | Encryption Name      | Cost  | Current Effectiveness\n");
-    printf("---|----------------------|-------|----------------------\n");
+    printf(" # | Encryption Name                        | Cost  | Current Effectiveness\n");
+    printf("---|----------------------------------------|-------|----------------------\n");
     for (int i=0; i<NUM_ENCRYPTION; i++){
-        printf(" %d | %20s | %5d | %.2f\n", i + 1, encryptionStock[i].name, encryptionStock[i].cost, encryptionStock[i].effectiveness);
+        printf(" %d | %38s | %5d | %.2f\n", i + 1, encryptionStock[i].name, encryptionStock[i].cost, encryptionStock[i].effectiveness);
     }
 
     printf("\n");
-    printf("Please select the number of the encryption you would like to buy: ");
+    printf("Please select the number of the encryption to view more details: ");
     scanf("%d", &encryptSelect);
     // adjust encryption selection by one, since user input starts at one and not zero
     encryptSelect -= 1;
 
     if (encryptSelect >= 0 && encryptSelect < (NUM_ENCRYPTION)){
         printf("You have selected: %s\n", encryptionStock[encryptSelect].name);
+        printf("%s\n", encryptionStock[encryptSelect].description);
 
         int transactionTotal = encryptionStock[encryptSelect].cost;
         printf("This will cost: %d credits\n", transactionTotal);
@@ -495,7 +554,7 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
             return;
         }
 
-        printf("Are you sure? y/N ");
+        printf("Do you want to purchase? y/N ");
         scanf(" %c", &yesNo);
         if (yesNo == 'Y' || yesNo == 'y'){
             printf("Thank You!\n");
