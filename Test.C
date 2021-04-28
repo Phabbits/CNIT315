@@ -1,6 +1,7 @@
 // Include libraries
 #include <stdio.h>
 #include <stdlib.h>
+#include <curl/curl.h> // Currently the school's linux machines cannot run curl
 
 // Define literals
 #define NAME_LENGTH 35
@@ -54,6 +55,10 @@ struct Round{
 void displayBriefingMessage(struct Player *playerPtr);
 void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_ENCRYPTION]);
 void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock[NUM_ENCRYPTION]);
+
+// Function prototypes for adding the grabbing the score from the website
+void addScore(char playerName, int score, int seed, int version);
+void getScores(int seed, int version);
 
 int main(){
     // Initialize structures
@@ -388,6 +393,10 @@ int main(){
 
         // Save player score to leaderboard (prototype 2)
     }
+	
+	// Calling upon the function for adding/grabbing the score from the website
+	void addScore(char playerName, int score, int seed, int version);
+	void getScores(int seed, int version);
 }
 
 /******************************************************************************
@@ -580,4 +589,87 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
         printf("\n");
         return;
     }
+}
+
+/******************************************************************************
+* Function:    addScore
+* Description: Example of curl calls to add player score
+* Parameters:  playerName, score, seed, version
+* Return:      void
+******************************************************************************/
+void addScore(char playerName, int score, int seed, int version){
+  CURL *curl;
+  CURLcode res;
+  
+  /* Creates the fields in which the scores are saved to the website */
+  sprintf(char *fields, "player_name=%s&score=%d&seed=%d&version=%d", &playerName, &score, &seed, &version);
+
+  /* In windows, this will init the winsock stuff */
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  /* get a curl handle */
+  curl = curl_easy_init();
+  if (curl){
+    /* First set the URL that is about to receive our POST. This URL can
+       just as well be a https:// URL if that is what should receive the
+       data. */
+    curl_easy_setopt(curl, CURLOPT_URL, "http://frey.network/CNIT315/api.php");
+    /* Now specify the POST data */
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, fields);
+
+    /* Perform the request, res will get the return code */
+    res = curl_easy_perform(curl);
+    /* Check for errors */
+    if (res != CURLE_OK)
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+  }
+  curl_global_cleanup();
+}
+
+/******************************************************************************
+* Function:    getScores
+* Description: Example of how to get scores from API
+* Parameters:  seed, version
+* Return:      void
+******************************************************************************/
+void getScores(int seed, int version){
+  CURL *curl;
+  CURLcode res;
+  
+  /* Creates the fields in which the scores saved on the website are called upon */
+  sprintf(char *fields, "seed=%d&version=%d", &seed, &version);
+  
+  /* In windows, this will init the winsock stuff */
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  /* get a curl handle */
+  curl = curl_easy_init();
+  if (curl){
+    /* First set the URL that is about to receive our POST. This URL can
+       just as well be a https:// URL if that is what should receive the
+       data. */
+    curl_easy_setopt(curl, CURLOPT_URL, "http://frey.network/CNIT315/api.php");
+    /* Now specify the POST data */
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, fields);
+
+    /* Perform the request, res will get the return code */
+    res = curl_easy_perform(curl);
+    /* Check for errors */
+    if (res != CURLE_OK)
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+  }
+  curl_global_cleanup();
+  
+  /* Formatting for the display of the scores */
+  printf(" # | Player Name                  | Score  | Seed  | Version  \n");
+  printf("---|------------------------------|--------|-------|----------\n");
+  printf("player_name=%s&score=%d&seed=%d&version=%d", &playerName, &score, &seed, &version)
 }
