@@ -331,8 +331,7 @@ int main(){
         // assumes that you can sell the equipment for the same price that is bought 
 
         do{
-            printf("Would you like to sell your equipment? \n");
-            printf("Press Y to open the store or ENTER to continue: ");
+            printf("Would you like to sell your equipment? y/N: ");
             scanf(" %c", &storeSelect);
             if (storeSelect == 'Y' || storeSelect == 'y'){
                 encryptionStore(&player, encryptionStock);
