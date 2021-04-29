@@ -329,7 +329,6 @@ int main(){
         // increase credit if things are sold
         // So this is a lot of pseudo code or not finished but idk how to do it fully but it a good framework 
         // assumes that you can sell the equipment for the same price that is bought 
-
         do{
             printf("Would you like to sell your equipment? y/N: ");
             scanf(" %c", &storeSelect);
