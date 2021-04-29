@@ -558,6 +558,91 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
 }
 
 /******************************************************************************
+* Function:    addScore
+* Description: Example of curl calls to add player score
+* Parameters:  playerName, score, seed, version
+* Return:      void
+******************************************************************************/
+void addScore(char playerName[NAME_LENGTH], int score, int seed, int version){
+  CURL *curl;
+  CURLcode res;
+
+  char fields[50];
+
+  /* Creates the fields in which the scores are saved to the website */
+  sprintf(fields, "player_name=%s&score=%d&seed=%d&version=%d", playerName, score, seed, version);
+
+  /* In windows, this will init the winsock stuff */
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  /* get a curl handle */
+  curl = curl_easy_init();
+  if (curl){
+    /* First set the URL that is about to receive our POST. This URL can
+       just as well be a https:// URL if that is what should receive the
+       data. */
+    curl_easy_setopt(curl, CURLOPT_URL, "http://frey.network/CNIT315/api.php");
+    /* Now specify the POST data */
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, fields);
+
+    /* Perform the request, res will get the return code */
+    res = curl_easy_perform(curl);
+    /* Check for errors */
+    if (res != CURLE_OK)
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+  }
+  curl_global_cleanup();
+}
+
+/******************************************************************************
+* Function:    getScores
+* Description: Example of how to get scores from API
+* Parameters:  seed, version
+* Return:      void
+******************************************************************************/
+void getScores(int seed, int version){
+  /* Formatting for the display of the scores */
+  printf(" # | Player Name                  | Score  | Seed  | Version  \n");
+  printf("---|------------------------------|--------|-------|----------\n");
+
+  CURL *curl;
+  CURLcode res;
+  char fields[50];
+
+  /* Creates the fields in which the scores saved on the website are called upon */
+  sprintf(fields, "seed=%d&version=%d", seed, version);
+
+  /* In windows, this will init the winsock stuff */
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  /* get a curl handle */
+  curl = curl_easy_init();
+  if (curl){
+    /* First set the URL that is about to receive our POST. This URL can
+       just as well be a https:// URL if that is what should receive the
+       data. */
+    curl_easy_setopt(curl, CURLOPT_URL, "http://frey.network/CNIT315/api.php");
+    /* Now specify the POST data */
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, fields);
+
+    /* Perform the request, res will get the return code */
+    res = curl_easy_perform(curl);
+    /* Check for errors */
+    if (res != CURLE_OK)
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+  }
+  curl_global_cleanup();
+}
+
+/******************************************************************************
 * Function:    SellingStore
 * Description: Interactive store where player can sell equipment
 * Parameters:  playerPtr, Player, pointer to the player object
@@ -591,29 +676,29 @@ void SellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_
         printf("This will sell for: %d\n", equipSellTransaction);
         printf("Are you sure you want to sell? y/N: ");
         scanf(" %c", &equipSellAnswer);
-            if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){
-                if (playerPtr->equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
-                    printf("Thank You!\n");
-                    playerPtr->currentCredits = playerPtr->currentCredits + equipSellTransaction;
-                    printf("Your current credits are: %d\n", playerPtr->currentCredits); // current credit
-                    playerPtr->equipmentInventory[0] = playerPtr->equipmentInventory[0] - equipSellAmount;
-                }
-                if (playerPtr->equipmentInventory == 0){ // checks that the user has the item in their inventory
-                    printf("You do not have any of this equipment in your inventory\n");
-                    printf("The transaction was canceled\n");
-                }
+        if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){
+            if (playerPtr->equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
+                printf("Thank You!\n");
+                playerPtr->currentCredits = playerPtr->currentCredits + equipSellTransaction;
+                printf("Your current credits are: %d\n", playerPtr->currentCredits); // current credit
+                playerPtr->equipmentInventory[0] = playerPtr->equipmentInventory[0] - equipSellAmount;
             }
-            if (equipSellAnswer == 'n' || equipSellAnswer == 'N'){
+            if (playerPtr->equipmentInventory == 0){ // checks that the user has the item in their inventory
+                printf("You do not have any of this equipment in your inventory\n");
                 printf("The transaction was canceled\n");
             }
-            // print equipment that is owned
-            printf("Equipment that you own:\n");
-            printf(" # | Equipment Name                       | Cost  | Message Amount | Inventory |\n");
-            printf("---|--------------------------------------|-------|----------------|-----------|\n");
-            for (int i=0; i<NUM_EQUIPMENT; i++){
-                printf(" %d | %36s | %5d | %14d | %9d |\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, playerPtr->equipmentInventory[i]);
-            }
-            printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
-            scanf("%d", &equipSellSelect);
         }
+        if (equipSellAnswer == 'n' || equipSellAnswer == 'N'){
+            printf("The transaction was canceled\n");
+        }
+        // print equipment that is owned
+        printf("Equipment that you own:\n");
+        printf(" # | Equipment Name                       | Cost  | Message Amount | Inventory |\n");
+        printf("---|--------------------------------------|-------|----------------|-----------|\n");
+        for (int i=0; i<NUM_EQUIPMENT; i++){
+            printf(" %d | %36s | %5d | %14d | %9d |\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, playerPtr->equipmentInventory[i]);
+        }
+        printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
+        scanf("%d", &equipSellSelect);
+    }
 }
