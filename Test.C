@@ -555,7 +555,6 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
 *              equipmentStock, Equipment, array of all possible equipments
 * Return:      void
 ******************************************************************************/
-
 void SellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_EQUIPMENT]) {
     int equipSellSelect;
     int equipSellAmount;
