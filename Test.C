@@ -167,9 +167,33 @@ int main(){
             {1, -1}
     };
 
+    //RANDOMLY POPULATE ROUNDS WITH ATTACKS
+    for (int i=0; i<NUM_ROUNDS; i++){ 
+        int previousRound = i - 1;
+        int randomRound;
+        int b = 0;
+        //for rounds that the attacks do not change 
+        if (rounds[i].attack > -1) {
+            rounds[i].attack = rounds[previousRound].attack;
+        }
+        //rounds that the attacks do change 
+        else {
+            while (b == 0){
+                // generates a random number between 0 and 6
+                randomRound = rand() % ((NUM_ATTACK - 1) + 1 - 0) + 0;
+                if (rounds[i].attackTier == attackStock[randomRound].tier){
+                    rounds[i].attack = randomRound;
+                    b++;
+                }
+            }
+        }
+
+     }
+
     // declare
     struct Player player;
     int currentRound = 0;
+    int previousRound = currentRound - 1; 
     int i;
     struct EncryptionInventory *encryptionPtr;
     char pause;
@@ -255,7 +279,7 @@ int main(){
         // Present attack
         // print attack details and affects of attack
         // edit encrypt structure effectiveness
-        if (rounds[currentRound].attack > -1){
+        if (rounds[currentRound].attack == rounds[previousRound].attack){ //changed this portion becuase it would not work after I added the random rounds
             Attack currentAttack = attackStock[rounds[currentRound].attack];
             printf("|----------------------------- Warning New Attack! ----------------------------|\n");
             printf("%s was developed!\n", currentAttack.name);
