@@ -312,8 +312,7 @@ int main(){
         // add pointer to encrypt linked list
         // decrease credits if things are brought
         do{
-            printf("Would you like to buy encryption? y/N: \n ");
-            printf("Press Y to open the store or ENTER to continue: ");
+            printf("Would you like to buy encryption? y/N: ");
             scanf(" %c", &storeSelect);
             if (storeSelect == 'Y' || storeSelect == 'y'){
                 encryptionStore(&player, encryptionStock);
