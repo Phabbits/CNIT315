@@ -566,7 +566,7 @@ void SellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_
     printf("Equipment that you own:\n");
     printf(" # | Equipment Name                       | Cost  | Message Amount | Inventory |\n");
     printf("---|--------------------------------------|-------|----------------|-----------|\n");
-    for(int i=0; i<NUM_EQUIPMENT; i++){
+    for (int i=0; i<NUM_EQUIPMENT; i++){
         printf(" %d | %36s | %5d | %14d | %9d |\n", i + 1, equipmentStock[i].name, equipmentStock[i].cost, equipmentStock[i].messageAmount, playerPtr->equipmentInventory[i]);
     }
 
