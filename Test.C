@@ -295,8 +295,7 @@ int main(){
         char storeSelect;
 
         do{
-            printf("Would you like to buy equipment? y/N: \n");
-            printf("Press Y to open the store or ENTER to continue: ");
+            printf("Would you like to buy equipment? y/N: ");
             scanf(" %c", &storeSelect);
             if (storeSelect == 'Y' || storeSelect == 'y'){
                 equipmentStore(&player, equipmentStock);
@@ -610,4 +609,3 @@ void SellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_
             scanf("%d", &equipSellSelect);
         }
 }
-
