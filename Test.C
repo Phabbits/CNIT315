@@ -57,7 +57,7 @@ void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NU
 void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock[NUM_ENCRYPTION]);
 
 // Function prototypes for adding the grabbing the score from the website
-void addScore(char playerName, int score, int seed, int version);
+void addScore(char playerName[NAME_LENGTH], int score, int seed, int version);
 void getScores(int seed, int version);
 
 int main(){
@@ -326,8 +326,8 @@ int main(){
         // Selling equipment
         // decrease amount in index amount if things are sold
         // increase credit if things are sold
-        // So this is a lot of pseudo code or not finished but idk how to do it fully but it a good framework 
-        // assumes that you can sell the equipment for the same price that is bought 
+        // So this is a lot of pseudo code or not finished but idk how to do it fully but it a good framework
+        // assumes that you can sell the equipment for the same price that is bought
         int equipSellSelect;
         int equipSellAmount;
         int equipSellTransaction;
@@ -354,12 +354,12 @@ int main(){
             printf("This will sell for: %d\n", equipSellTransaction);
             printf("Are you sure you want to sell? y/N ");
             scanf(" %c", &equipSellAnswer);
-            if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){ 
+            if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){
                 if (player.equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
                     printf("Thank You!\n");
                     player.currentCredits = player.currentCredits + equipSellTransaction;
                     printf("Your current credits are: %d\n", player.currentCredits); // current credit
-                    player.equipmentInventory[0] = player.equipmentInventory[0] - equipSellAmount; 
+                    player.equipmentInventory[0] = player.equipmentInventory[0] - equipSellAmount;
                 }
                 if (player.equipmentInventory == 0){ // checks that the user has the item in their inventory
                     printf("You do not have any of this equipment in your inventory\n");
@@ -393,10 +393,10 @@ int main(){
 
         // Save player score to leaderboard (prototype 2)
     }
-	
+
 	// Calling upon the function for adding/grabbing the score from the website
-	void addScore(player.name, player.currentCredits, 1, 0.01);
-	void getScores(1, 0.01);
+	addScore(player.name, player.currentCredits, 1, 0.01);
+	getScores(1, 0.01);
 }
 
 /******************************************************************************
@@ -600,9 +600,9 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
 void addScore(char playerName[NAME_LENGTH], int score, int seed, int version){
   CURL *curl;
   CURLcode res;
-  
+
   char fields[50];
-  
+
   /* Creates the fields in which the scores are saved to the website */
   sprintf(fields, "player_name=%s&score=%d&seed=%d&version=%d", playerName, score, seed, version);
 
@@ -642,10 +642,10 @@ void getScores(int seed, int version){
   CURL *curl;
   CURLcode res;
   char fields[50];
-  
+
   /* Creates the fields in which the scores saved on the website are called upon */
   sprintf(fields, "seed=%d&version=%d", seed, version);
-  
+
   /* In windows, this will init the winsock stuff */
   curl_global_init(CURL_GLOBAL_ALL);
 
@@ -670,7 +670,7 @@ void getScores(int seed, int version){
     curl_easy_cleanup(curl);
   }
   curl_global_cleanup();
-  
+
   /* Formatting for the display of the scores */
   printf(" # | Player Name                  | Score  | Seed  | Version  \n");
   printf("---|------------------------------|--------|-------|----------\n");
