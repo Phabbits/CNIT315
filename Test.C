@@ -580,7 +580,7 @@ void SellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_
         scanf("%d", &equipSellAmount);
         equipSellTransaction = equipmentStock[0].cost * equipSellAmount; // not sure if that should be equipmentStock or not
         printf("This will sell for: %d\n", equipSellTransaction);
-        printf("Are you sure you want to sell? y/N ");
+        printf("Are you sure you want to sell? y/N: ");
         scanf(" %c", &equipSellAnswer);
             if (equipSellAnswer == 'y' || equipSellAnswer == 'Y'){ 
                 if (playerPtr->equipmentInventory[0] > 0){ // checks that the user has the item in thier inventory
