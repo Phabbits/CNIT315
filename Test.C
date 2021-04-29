@@ -300,9 +300,11 @@ int main(){
             if (storeSelect == 'Y' || storeSelect == 'y'){
                 equipmentStore(&player, equipmentStock);
             }
+            /* attempt at having enter actually skip question without a character input
             else if (storeSelect == '\r') { //tried \r \n ASCII 10 ASCII 13 ASCII 0x0A
                 break;
             }
+            */
             else{
                 break;
             }
