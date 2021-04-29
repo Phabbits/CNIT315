@@ -395,8 +395,8 @@ int main(){
     }
 	
 	// Calling upon the function for adding/grabbing the score from the website
-	void addScore(char playerName, int score, int seed, int version);
-	void getScores(int seed, int version);
+	void addScore(player.name, player.currentCredits, 1, 0.01);
+	void getScores(1, 0.01);
 }
 
 /******************************************************************************
@@ -597,12 +597,14 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
 * Parameters:  playerName, score, seed, version
 * Return:      void
 ******************************************************************************/
-void addScore(char playerName, int score, int seed, int version){
+void addScore(char playerName[NAME_LENGTH], int score, int seed, int version){
   CURL *curl;
   CURLcode res;
   
+  char fields[50];
+  
   /* Creates the fields in which the scores are saved to the website */
-  sprintf(char *fields, "player_name=%s&score=%d&seed=%d&version=%d", &playerName, &score, &seed, &version);
+  sprintf(fields, "player_name=%s&score=%d&seed=%d&version=%d", playerName, score, seed, version);
 
   /* In windows, this will init the winsock stuff */
   curl_global_init(CURL_GLOBAL_ALL);
@@ -639,9 +641,10 @@ void addScore(char playerName, int score, int seed, int version){
 void getScores(int seed, int version){
   CURL *curl;
   CURLcode res;
+  char fields[50];
   
   /* Creates the fields in which the scores saved on the website are called upon */
-  sprintf(char *fields, "seed=%d&version=%d", &seed, &version);
+  sprintf(fields, "seed=%d&version=%d", seed, version);
   
   /* In windows, this will init the winsock stuff */
   curl_global_init(CURL_GLOBAL_ALL);
@@ -671,5 +674,4 @@ void getScores(int seed, int version){
   /* Formatting for the display of the scores */
   printf(" # | Player Name                  | Score  | Seed  | Version  \n");
   printf("---|------------------------------|--------|-------|----------\n");
-  printf("player_name=%s&score=%d&seed=%d&version=%d", &playerName, &score, &seed, &version)
 }
