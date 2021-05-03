@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <curl/curl.h> // Currently the school's linux machines cannot run curl
+#include <time.h>
 
 // Define literals
 #define NAME_LENGTH 35
@@ -146,38 +147,34 @@ int main(){
     // rounds with -1 do not upgrade attack
     Round rounds[NUM_ROUNDS] = {
             {1, 0},
+            {1, 1},
             {1, -1},
             {1, -1},
             {1, -1},
             {2, 1},
-            {1, -1},
             {2, -1},
-            {1, -1},
-            {1, -1},
-            {3, 2},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1}
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {3, 1},
+            {3, -1},
+            {3, 1},
+            {3, -1}
     };
 
     //RANDOMLY POPULATE ROUNDS WITH ATTACKS
-    for (int i=0; i<NUM_ROUNDS; i++){ 
-        int previousRound = i - 1;
+    for (int i=0; i<NUM_ROUNDS; i++){
         int randomRound;
         int b = 0;
-        //for rounds that the attacks do not change 
+	    srand(time(NULL));
+        //for rounds that the attacks do change
         if (rounds[i].attack > -1) {
-            rounds[i].attack = rounds[previousRound].attack;
-        }
-        //rounds that the attacks do change 
-        else {
             while (b == 0){
                 // generates a random number between 0 and 6
                 randomRound = rand() % ((NUM_ATTACK - 1) + 1 - 0) + 0;
@@ -187,7 +184,6 @@ int main(){
                 }
             }
         }
-
      }
 
     // declare
