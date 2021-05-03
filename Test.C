@@ -55,6 +55,7 @@ struct Round{
 void displayBriefingMessage(struct Player *playerPtr);
 void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_ENCRYPTION]);
 void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock[NUM_ENCRYPTION]);
+void sellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_EQUIPMENT]);
 
 // Function prototypes for adding the grabbing the score from the website
 void addScore(char playerName[NAME_LENGTH], int score, int seed, int version);
@@ -338,7 +339,7 @@ int main(){
             printf("Would you like to sell your equipment? y/N: ");
             scanf(" %c", &storeSelect);
             if (storeSelect == 'Y' || storeSelect == 'y'){
-                encryptionStore(&player, encryptionStock);
+                sellingStore(&player, equipmentStock);
             }
             else{
                 break;
@@ -643,13 +644,13 @@ void getScores(int seed, int version){
 }
 
 /******************************************************************************
-* Function:    SellingStore
+* Function:    sellingStore
 * Description: Interactive store where player can sell equipment
 * Parameters:  playerPtr, Player, pointer to the player object
 *              equipmentStock, Equipment, array of all possible equipments
 * Return:      void
 ******************************************************************************/
-void SellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_EQUIPMENT]){
+void sellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_EQUIPMENT]){
     int equipSellSelect;
     int equipSellAmount;
     int equipSellTransaction;
