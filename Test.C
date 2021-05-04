@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <curl/curl.h> // Currently the school's linux machines cannot run curl
+#include <time.h>
 
 // Define literals
 #define NAME_LENGTH 35
@@ -145,27 +146,45 @@ int main(){
     /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
     // rounds with -1 do not upgrade attack
     Round rounds[NUM_ROUNDS] = {
-            {1, 0},
+            {1, 1},
+            {1, 1},
             {1, -1},
             {1, -1},
             {1, -1},
             {2, 1},
-            {1, -1},
             {2, -1},
-            {1, -1},
-            {1, -1},
-            {3, 2},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1},
-            {1, -1}
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {2, -1},
+            {3, 1},
+            {3, -1},
+            {3, 1},
+            {3, -1}
     };
+
+    //RANDOMLY POPULATE ROUNDS WITH ATTACKS
+    for (int i=0; i<NUM_ROUNDS; i++){
+        int randomAttackIndex;
+        int b = 0;
+	    srand(time(NULL));
+        //for rounds that the attacks do change
+        if (rounds[i].attack > -1) {
+            while (b == 0){
+                // generates a random number between 0 and 6
+                randomAttackIndex = rand() % NUM_ATTACK;
+                if (rounds[i].attackTier == attackStock[randomAttackIndex].tier){
+                    rounds[i].attack = randomAttackIndex;
+                    b++;
+                }
+            }
+        }
+     }
 
     // declare
     struct Player player;
@@ -255,7 +274,7 @@ int main(){
         // Present attack
         // print attack details and affects of attack
         // edit encrypt structure effectiveness
-        if (rounds[currentRound].attack > -1){
+        if (rounds[currentRound].attack > -1){ 
             Attack currentAttack = attackStock[rounds[currentRound].attack];
             printf("|----------------------------- Warning New Attack! ----------------------------|\n");
             printf("%s was developed!\n", currentAttack.name);
