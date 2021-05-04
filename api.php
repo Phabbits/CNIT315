@@ -70,7 +70,7 @@ function sql_add_score($conn, $player_name, $score, $seed, $version){
 }
 
 function sql_echo_scores($conn, $seed, $version){
-  $stmt = $conn->prepare('SELECT player_name, score FROM score WHERE seed = :seed AND version = :version ORDER BY score');
+  $stmt = $conn->prepare('SELECT player_name, score FROM score WHERE seed = :seed AND version = :version ORDER BY score DESC');
   $stmt->execute(array(':seed' => $seed, ':version' => $version));
 
   // get array with all result rows

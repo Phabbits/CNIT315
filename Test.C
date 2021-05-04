@@ -384,11 +384,10 @@ int main(){
         printf("%80s", "[Press Enter to Begin Next Round]");
         scanf("%c", &pause);
         printf("\n");
-
         // Save player score to leaderboard (prototype 2)
     }
     printf("\n");
-    printf("|==================== Congratulations! You've Finished ========================|\n", currentRound + 1);
+    printf("|==================== Congratulations! You've Finished ========================|\n");
 
 	// Calling upon the function for adding/grabbing the score from the website
 	addScore(player.name, player.currentCredits, 1, 0.01);
