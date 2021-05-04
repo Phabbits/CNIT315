@@ -25,4 +25,25 @@ Player is randomly given starting equipment, encryption method, and credit amoun
 3. Spend Credits: Player can choose to buy/sell equipment and/or upgrade to a new encryption method 
 
 ## Game End: 
-The game ends after a set number of rounds, or when the player is unable to send a confidential message. Saves player high score to a leaderboard. 
+The game ends after a set number of rounds, or when the player is unable to send a confidential message. Saves player high score to a leaderboard.
+
+# How to Execute Our Program (sudo privileges may be needed)
+This program was written in C, so it can be compiled on a variety of hardware devices and/or operating systems. We have had success running the program on Linux operating systems and Windows operating systems with Windows Subsystem for Linux installed. We used Ubuntu distributions of Linux.  
+
+No matter what system you run the code on, you will need to ensure that the CURL library is installed. To do this on a Linux system or Windows Subsystem for Linux, ensure you have sudo privileges and enter the following command into the terminal: 
+
+`sudo apt-get install libcurl4-openssl-dev `
+
+ ## To compile the program, enter the following command into a Linux terminal while in the same directory as “main.C”: 
+
+`gcc main.C -lcurl -o Final`
+
+This will create an executable file named “Final” that has been compiled for your hardware. 
+
+To execute the compiled program, enter the following command into the same Linux terminal: 
+`./Final`
+This will run the program.
+
+To combine these steps, enter the following: 
+
+`gcc main.C -lcurl -o Final && ./Final`
