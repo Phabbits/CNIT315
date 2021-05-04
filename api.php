@@ -39,7 +39,7 @@ try{
   if (isset($player_name)){
     // player was given, so assume to add a score
     sql_add_score($conn, $player_name, $score, $seed, $version);
-    echo "Added new score! $player_name, $score, $seed, $version\n";
+    echo "Added new score! Congrats, $player_name, you scored $score\n\n";
   }
   else{
     // no details given, so assume request to get highscores
@@ -70,14 +70,16 @@ function sql_add_score($conn, $player_name, $score, $seed, $version){
 }
 
 function sql_echo_scores($conn, $seed, $version){
-  $stmt = $conn->prepare('SELECT player_name, score FROM score WHERE seed = :seed AND version = :version');
+  $stmt = $conn->prepare('SELECT player_name, score FROM score WHERE seed = :seed AND version = :version ORDER BY score');
   $stmt->execute(array(':seed' => $seed, ':version' => $version));
 
   // get array with all result rows
   $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+  $rank = 1;
   foreach ($rows as $row){
-    echo $row["player_name"] . " " . $row["score"] . "\n";
+    echo " " . $rank . "   " . $row["score"] . "      " . $row["player_name"] . "\n";
+    $rank = $rank + 1;
   }
 }
 ?>
