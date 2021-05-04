@@ -181,7 +181,7 @@ int main(){
             while (b == 0){
                 // generates a random number between 0 and 6
                 randomAttackIndex = rand() % NUM_ATTACK;
-                if (existsInArray(randomAttackIndex, existingAttacks)) {
+                if (existsInArray(randomAttackIndex, existingAttacks)){
                     continue;
                 }
                 if (rounds[i].attackTier == attackStock[randomAttackIndex].tier){
@@ -739,7 +739,7 @@ void sellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_
 * Return:      1 if it exists, 0 if it does not
 ******************************************************************************/
 int existsInArray(int value, int arr[NUM_ROUNDS_WITH_ATTACK]) {
-    for(int i = 0; i < NUM_ROUNDS_WITH_ATTACK; i++) {
+    for (int i=0; i<NUM_ROUNDS_WITH_ATTACK; i++) {
         if (value == arr[i]) {
             return 1;
         }
