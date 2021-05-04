@@ -1,7 +1,7 @@
 // Include libraries
 #include <stdio.h>
 #include <stdlib.h>
-#include <curl/curl.h> // Currently the school's linux machines cannot run curl
+#include <curl/curl.h> // Currently the school's linux machines cannot run curl. Need to run: sudo apt-get install libcurl4-openssl-dev
 #include <time.h>
 
 // Define literals
@@ -11,6 +11,7 @@
 #define NUM_ENCRYPTION 8
 #define NUM_ATTACK 7
 #define NUM_ROUNDS 20
+#define NUM_ROUNDS_WITH_ATTACK 5
 
 // Define structures
 struct Equipment{
@@ -57,6 +58,7 @@ void displayBriefingMessage(struct Player *playerPtr);
 void equipmentStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_ENCRYPTION]);
 void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock[NUM_ENCRYPTION]);
 void sellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_EQUIPMENT]);
+int existsInArray(int value, int arr[NUM_ROUNDS_WITH_ATTACK]);
 
 // Function prototypes for adding the grabbing the score from the website
 void addScore(char playerName[NAME_LENGTH], int score, int seed, int version);
@@ -132,18 +134,17 @@ int main(){
 
     // initialize 2d of attack effects (encrypt)
     double attackEffectiveness[NUM_ENCRYPTION][NUM_ATTACK] = {
-            {/* Attack0: */ 0.2, /* Attack1 */ 0.4, /* Attack2: */ 0.6, /* Attack3: */ 0.0, /* Attack4: */ 1.0}, // Encryption0
-            {/* Attack0: */ 0.1, /* Attack1 */ 0.3, /* Attack2: */ 0.4, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption1
-            {/* Attack0: */ 0.0, /* Attack1 */ 0.1, /* Attack2: */ 0.3, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption2
-            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.1, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption3
-            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption4
-            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption5
-            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}, // Encryption6
-            {/* Attack0: */ 0.0, /* Attack1 */ 0.0, /* Attack2: */ 0.0, /* Attack3: */ 1.0, /* Attack4: */ 1.0}  // Encryption7
+            {/* BruteForce1: */ 0.2, /* BruteForce2 */ 0.9, /* BruteForce3: */ 1.0, /* ChosenPlaintext: */ 0.2, /* ChosenCiphertext: */ 0.2, /* FrequencyAnalysis: */ 0.9, /* SideChannel: */ 1.0}, // Caesar
+            {/* BruteForce1: */ 0.1, /* BruteForce2 */ 0.4, /* BruteForce3: */ 1.0, /* ChosenPlaintext: */ 0.1, /* ChosenCiphertext: */ 0.2, /* FrequencyAnalysis: */ 0.7, /* SideChannel: */ 1.0}, // Vigenere
+            {/* BruteForce1: */ 0.1, /* BruteForce2 */ 0.1, /* BruteForce3: */ 0.3, /* ChosenPlaintext: */ 0.1, /* ChosenCiphertext: */ 0.1, /* FrequencyAnalysis: */ 0.5, /* SideChannel: */ 0.6}, // ChaCha
+            {/* BruteForce1: */ 0.2, /* BruteForce2 */ 0.2, /* BruteForce3: */ 0.5, /* ChosenPlaintext: */ 0.1, /* ChosenCiphertext: */ 0.2, /* FrequencyAnalysis: */ 0.3, /* SideChannel: */ 0.5}, // DES
+            {/* BruteForce1: */ 0.0, /* BruteForce2 */ 0.05, /* BruteForce3: */ 0.3, /* ChosenPlaintext: */ 0.1, /* ChosenCiphertext: */ 0.1, /* FrequencyAnalysis: */ 0.1, /* SideChannel: */ 0.3}, // 3DES
+            {/* BruteForce1: */ 0.0, /* BruteForce2 */ 0.0, /* BruteForce3: */ 0.2, /* ChosenPlaintext: */ 0.0, /* ChosenCiphertext: */ 0.0, /* FrequencyAnalysis: */ 0.0, /* SideChannel: */ 0.2}, // Encrypt>MAC
+            {/* BruteForce1: */ 0.0, /* BruteForce2 */ 0.05, /* BruteForce3: */ 0.2, /* ChosenPlaintext: */ 0.0, /* ChosenCiphertext: */ 0.1, /* FrequencyAnalysis: */ 0., /* SideChannel: */ 0.2}, // AES
+            {/* BruteForce1: */ 0.0, /* BruteForce2 */ 0.0, /* BruteForce3: */ 0.05, /* ChosenPlaintext: */ 0.1, /* ChosenCiphertext: */ 0.0, /* FrequencyAnalysis: */ 0.0, /* SideChannel: */ 0.2}  // RSA
     };
 
     // order attacks for game rounds
-    /* TODO: RANDOMLY POPULATE ROUNDS WITH ATTACKS (Random number generator to pull from stock?) */
     // rounds with -1 do not upgrade attack
     Round rounds[NUM_ROUNDS] = {
             {1, 1},
@@ -169,6 +170,8 @@ int main(){
     };
 
     //RANDOMLY POPULATE ROUNDS WITH ATTACKS
+    int existingAttacks[NUM_ROUNDS_WITH_ATTACK] = {-1, -1, -1, -1, -1};
+    int amountExistingAttacks = 0;
     for (int i=0; i<NUM_ROUNDS; i++){
         int randomAttackIndex;
         int b = 0;
@@ -178,8 +181,13 @@ int main(){
             while (b == 0){
                 // generates a random number between 0 and 6
                 randomAttackIndex = rand() % NUM_ATTACK;
+                if (existsInArray(randomAttackIndex, existingAttacks)) {
+                    continue;
+                }
                 if (rounds[i].attackTier == attackStock[randomAttackIndex].tier){
                     rounds[i].attack = randomAttackIndex;
+                    existingAttacks[amountExistingAttacks] = randomAttackIndex;
+                    amountExistingAttacks++;
                     b++;
                 }
             }
@@ -261,12 +269,12 @@ int main(){
         player.currentCredits += newCredits; // adding credits to currentCredits
 
         // tell user how credits received and what encrypt method was used
-	      printf("You received %d credits for the amount of messages that were successfully sent!\n", newCredits); // telling the user how many credits they were awarded
+        printf("You received %d credits for the amount of messages that were successfully sent!\n", newCredits); // telling the user how many credits they were awarded
 
         printf("Your total credits: %d\n", player.currentCredits); // current credit
         printf("\n");
 
-        //pause
+        // pause
         printf("%80s", "[Press Enter to Prepare for The Next Round]");
         scanf("%c", &pause);
         printf("\n");
@@ -557,7 +565,7 @@ void encryptionStore(struct Player *playerPtr, struct Encryption encryptionStock
             playerPtr->currentCredits = playerPtr->currentCredits - transactionTotal;
         }
 
-        // create new encyrption method node
+        // create new encryption method node
         struct EncryptionInventory *newEncryption;
         newEncryption = (struct EncryptionInventory *)malloc(sizeof(struct EncryptionInventory));
         newEncryption->encryption = &encryptionStock[encryptSelect];
@@ -721,4 +729,20 @@ void sellingStore(struct Player *playerPtr, struct Equipment equipmentStock[NUM_
         printf("Please select the equipment you would like to sell or select %d to pass: ", NUM_EQUIPMENT + 1);
         scanf("%d", &equipSellSelect);
     }
+}
+
+/******************************************************************************
+* Function:    existsInArray
+* Description: Determines if an integer exists in an integer array
+* Parameters:  value, the value to search for
+*              arr, the array to search in
+* Return:      1 if it exists, 0 if it does not
+******************************************************************************/
+int existsInArray(int value, int arr[NUM_ROUNDS_WITH_ATTACK]) {
+    for(int i = 0; i < NUM_ROUNDS_WITH_ATTACK; i++) {
+        if (value == arr[i]) {
+            return 1;
+        }
+    }
+    return 0;
 }
