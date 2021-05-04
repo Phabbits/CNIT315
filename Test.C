@@ -11,7 +11,7 @@
 #define NUM_ENCRYPTION 8
 #define NUM_ATTACK 7
 #define NUM_ROUNDS 20
-#define NUM_ROUNDS_WITH_ATTACK 5
+#define NUM_ROUNDS_WITH_ATTACK 6
 
 // Define structures
 struct Equipment{
@@ -157,7 +157,7 @@ int main(){
             {2, -1},
             {2, -1},
             {2, -1},
-            {2, -1},
+            {2, 1},
             {2, -1},
             {2, -1},
             {2, -1},
@@ -170,7 +170,7 @@ int main(){
     };
 
     //RANDOMLY POPULATE ROUNDS WITH ATTACKS
-    int existingAttacks[NUM_ROUNDS_WITH_ATTACK] = {-1, -1, -1, -1, -1};
+    int existingAttacks[NUM_ROUNDS_WITH_ATTACK] = {-1, -1, -1, -1, -1, -1};
     int amountExistingAttacks = 0;
     for (int i=0; i<NUM_ROUNDS; i++){
         int randomAttackIndex;
@@ -211,7 +211,7 @@ int main(){
 
     while (currentRound < NUM_ROUNDS){
         printf("\n");
-        printf("|=============================== Round %2d / %2d ===============================|\n", currentRound, NUM_ROUNDS);
+        printf("|=============================== Round %2d / %2d ================================|\n", currentRound, NUM_ROUNDS);
 
         // Output player status (if statements)
         // current credit
@@ -282,7 +282,7 @@ int main(){
         // Present attack
         // print attack details and affects of attack
         // edit encrypt structure effectiveness
-        if (rounds[currentRound].attack > -1){ 
+        if (rounds[currentRound].attack > -1){
             Attack currentAttack = attackStock[rounds[currentRound].attack];
             printf("|----------------------------- Warning New Attack! ----------------------------|\n");
             printf("%s was developed!\n", currentAttack.name);
@@ -307,9 +307,9 @@ int main(){
         }
 
         //pause
+        printf("\n");
         printf("%80s", "[Press Enter to Continue to The Store]");
         scanf("%c", &pause);
-        printf("\n");
 
         printf("\n");
 
@@ -375,7 +375,7 @@ int main(){
 
 
         // round is complete
-        printf("|======================= This is the end of round %2d =========================|\n", currentRound + 1);
+        printf("|======================= This is the end of round %2d ==========================|\n", currentRound + 1);
 
         // round is complete
         currentRound++;
@@ -387,6 +387,8 @@ int main(){
 
         // Save player score to leaderboard (prototype 2)
     }
+    printf("\n");
+    printf("|==================== Congratulations! You've Finished ========================|\n", currentRound + 1);
 
 	// Calling upon the function for adding/grabbing the score from the website
 	addScore(player.name, player.currentCredits, 1, 0.01);
@@ -634,8 +636,8 @@ void addScore(char playerName[NAME_LENGTH], int score, int seed, int version){
 ******************************************************************************/
 void getScores(int seed, int version){
   /* Formatting for the display of the scores */
-  printf(" # | Player Name                  | Score  | Seed  | Version  \n");
-  printf("---|------------------------------|--------|-------|----------\n");
+  printf(" # |  Score  | Player Name                                    \n");
+  printf("---|---------|------------------------------------------------\n");
 
   CURL *curl;
   CURLcode res;
